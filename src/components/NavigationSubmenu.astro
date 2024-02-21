@@ -1,5 +1,7 @@
 ---
 import { joinClasses } from "../utils/joinClasses";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 type Props = {
   styles: string;
   classes: string;
@@ -13,6 +15,7 @@ const allClasses = joinClasses(classes, "group relative flex justify-center");
 <li class={allClasses} style={styles}>
   <a href={url} class="block w-full py-3 sm:py-0 px-4">
     {label}
+    <FontAwesomeIcon className="text-xs pl-1" icon={faChevronDown} />
   </a>
   <ul
     class="z-20 sm:hidden sm:group-hover:block textbg sm:absolute sm:top-full sm:text-center whitespace-nowrap py-2 shadow-lg rounded-bl-xl rounded-br-xl"

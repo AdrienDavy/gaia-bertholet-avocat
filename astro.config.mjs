@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import { loadEnv } from 'vite';
+import react from "@astrojs/react";
 const {
   PUBLIC_WP_URL
 } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
@@ -13,6 +14,5 @@ export default defineConfig({
   },
   integrations: [tailwind({
     applyBaseStyles: false // Disable base styles for custom-built components (defaults to true)
-  }),
-  ],
+  }), react()]
 });
