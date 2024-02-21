@@ -1,7 +1,36 @@
 ---
+import type { GetStaticPaths } from "astro";
 import type { Block } from "@wp-block-tools/styles";
 import BlockRenderer from "../components/BlockRenderer.astro";
 import CommonHead from "../components/CommonHead.astro";
+export async function getStaticPaths() {
+  const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+        query AllPages {
+          pages(first: 10000) {
+            nodes {
+              uri
+              blocks
+              seo {
+                title
+                metaDesc
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+  const { data } = await response.json();
+  return data.pages.nodes.map((page: any) => ({
+    params: { slug: page.uri === "/" ? undefined : page.uri },
+  }));
+}
 const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   method: "POST",
   headers: {
