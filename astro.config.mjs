@@ -9,6 +9,7 @@ const {
 
 // https://astro.build/config
 export default defineConfig({
+  devToolbar: { enabled: false },
   image: {
     domains: [PUBLIC_WP_URL]
   },

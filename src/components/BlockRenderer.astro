@@ -4,6 +4,7 @@ import BlockRendererSubLink from "./BlockRendererSubLink.astro";
 import Navigation from "./Navigation.astro";
 import NavigationLink from "./NavigationLink.astro";
 import NavigationSubmenu from "./NavigationSubmenu.astro";
+import Button from "./Button.astro";
 import Heading from "./Heading.astro";
 import Cover from "./Cover.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
@@ -20,6 +21,15 @@ const { blocks } = Astro.props;
     const { styles, classes } = getBlockStyling(block);
 
     switch (block.name) {
+      case "core/button":
+        return (
+          <Button
+            classes={classes}
+            styles={styles}
+            url={block.attributes?.url}
+            content={block.attributes?.content || ""}
+          />
+        );
       case "core/post-title":
       case "core/heading":
         return (
@@ -92,6 +102,7 @@ const { blocks } = Astro.props;
       case "core/column":
       case "core/post-content":
       case "core/group":
+      case "core/buttons":
         return (
           <div style={styles} class={classes}>
             <BlockRendererInner blocks={block.innerBlocks || []} />
