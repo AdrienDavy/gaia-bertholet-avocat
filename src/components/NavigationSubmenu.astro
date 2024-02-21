@@ -1,0 +1,22 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+type Props = {
+  styles: string;
+  classes: string;
+  label: string;
+  url: string;
+};
+const { styles, classes, label, url } = Astro.props;
+const allClasses = joinClasses(classes, "group relative flex justify-center");
+---
+
+<li class={allClasses} style={styles}>
+  <a href={url} class="block w-full py-3 sm:py-0 px-4">
+    {label}
+  </a>
+  <ul
+    class="z-20 sm:hidden sm:group-hover:block textbg sm:absolute sm:top-full sm:text-center whitespace-nowrap py-2 shadow-lg rounded-bl-xl rounded-br-xl"
+  >
+    <slot />
+  </ul>
+</li>

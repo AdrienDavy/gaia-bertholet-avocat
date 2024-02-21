@@ -1,0 +1,15 @@
+---
+type Props = {
+  styles: string;
+  classes: string;
+  label: string;
+  url: string;
+};
+const { styles, classes, label, url } = Astro.props;
+---
+
+<li class={classes} style={styles}>
+  <a href={url} class="">
+    {label}
+  </a>
+</li>
