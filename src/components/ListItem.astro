@@ -1,0 +1,15 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+type Props = {
+  styles: string;
+  classes: string;
+  content: string;
+};
+const { styles, classes, content } = Astro.props;
+const allClasses = joinClasses(
+  classes,
+  "group list-none py-2 [&_a]:hover:text-blue-100 [&_a]:transition-all",
+);
+---
+
+<li class={allClasses} style={styles} set:html={content} />

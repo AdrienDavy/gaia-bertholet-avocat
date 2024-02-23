@@ -8,6 +8,7 @@ import Button from "./Button.astro";
 import Heading from "./Heading.astro";
 import Cover from "./Cover.astro";
 import PostRenderer from "./PostRenderer.astro";
+import ListItem from "./ListItem.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
@@ -117,10 +118,19 @@ const { blocks } = Astro.props;
       case "core/post-content":
       case "core/group":
       case "core/buttons":
+      case "core/list":
         return (
           <div style={styles} class={classes}>
             <BlockRendererInner blocks={block.innerBlocks || []} />
           </div>
+        );
+      case "core/list-item":
+        return (
+          <ListItem
+            classes={classes}
+            styles={styles}
+            content={block.attributes?.content}
+          />
         );
       case "core/site-logo":
         return (
@@ -135,10 +145,10 @@ const { blocks } = Astro.props;
             </a>
           </div>
         );
-      case "core/template-part":
-        return <BlockRendererInner blocks={block.innerBlocks || []} />;
       case "core/latest-posts":
         return <PostRenderer dataPosts={dataPosts} />;
+      case "core/template-part":
+        return <BlockRendererInner blocks={block.innerBlocks || []} />;
       default:
         return null;
     }
