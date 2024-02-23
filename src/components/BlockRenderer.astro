@@ -1,18 +1,21 @@
 ---
 import BlockRendererInner from "./BlockRenderer.astro";
-import BlockRendererSubLink from "./BlockRendererSubLink.astro";
+import NavigationSubLink from "./NavigationSubLink.astro";
 import Navigation from "./Navigation.astro";
 import NavigationLink from "./NavigationLink.astro";
 import NavigationSubmenu from "./NavigationSubmenu.astro";
 import Button from "./Button.astro";
 import Heading from "./Heading.astro";
 import Cover from "./Cover.astro";
+import PostRenderer from "./PostRenderer.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
+import { dataPosts } from "../pages/[...slug].astro";
 type Props = {
   blocks: Block[];
 };
+
 const { blocks } = Astro.props;
 ---
 
@@ -77,7 +80,7 @@ const { blocks } = Astro.props;
             url={block.attributes?.url || ""}
           >
             {block.innerBlocks?.map((link) => (
-              <BlockRendererSubLink
+              <NavigationSubLink
                 classes={classes}
                 styles={styles}
                 label={link.attributes?.label || ""}
@@ -134,7 +137,8 @@ const { blocks } = Astro.props;
         );
       case "core/template-part":
         return <BlockRendererInner blocks={block.innerBlocks || []} />;
-
+      case "core/latest-posts":
+        return <PostRenderer dataPosts={dataPosts} />;
       default:
         return null;
     }

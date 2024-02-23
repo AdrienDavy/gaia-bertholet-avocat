@@ -1,21 +1,18 @@
 ---
-import type { GetStaticPaths } from "astro";
 import type { Block } from "@wp-block-tools/styles";
 import BlockRenderer from "../components/BlockRenderer.astro";
+import PostRenderer from "../components/PostRenderer.astro";
 import CommonHead from "../components/CommonHead.astro";
+import { wordpressQuery } from "../utils/wordpressQuery.ts";
+
 interface AstroParams {
   slug?: string;
 }
 const astroParams: AstroParams = Astro.params;
 export async function getStaticPaths() {
-  const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
-        query AllPages {
+  const data = await wordpressQuery({
+    query: `
+  query AllPages {
           pages(first: 10000) {
             nodes {
               uri
@@ -23,20 +20,13 @@ export async function getStaticPaths() {
           }
         }
       `,
-    }),
   });
-  const { data } = await response.json();
   return data.pages.nodes.map((page: any) => ({
     params: { slug: page.uri === "/" ? undefined : page.uri },
   }));
 }
-const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    query: `
+const data = await wordpressQuery({
+  query: `
     query PageQuery($uri: String!) {
       nodeByUri(uri: $uri) {
         ... on Page {
@@ -47,17 +37,39 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
             title
           }
         }
-      }
+      }      
     }
     `,
-    variables: {
-      uri: astroParams.slug || "/",
-    },
-  }),
+  variables: {
+    uri: astroParams.slug || "/",
+  },
 });
-const { data } = await response.json();
+
 const blocks = (data.nodeByUri?.blocks || []) as Block[];
 const seo = data.nodeByUri?.seo;
+
+export const dataPosts = await wordpressQuery({
+  query: `
+  {
+  posts(first: 2, where: {orderby: {field: DATE, order: DESC}}) {
+    nodes {
+      id
+      title
+      date
+      excerpt
+      content
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+      slug
+    }
+  }
+}
+      `,
+});
 ---
 
 <html lang="en">

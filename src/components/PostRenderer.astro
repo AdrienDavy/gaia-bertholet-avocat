@@ -1,0 +1,33 @@
+---
+import { truncateText } from "../utils/truncateText";
+import { formatDate } from "../utils/formatDate";
+const { dataPosts } = Astro.props;
+const posts = dataPosts.posts.nodes || [];
+import { Image } from "astro:assets";
+import { getBlockStyling } from "@wp-block-tools/styles";
+const { styles, classes } = getBlockStyling(posts);
+---
+
+<div class="md:flex space-x-5 w-full">
+  {
+    posts.map((post: any) => {
+      return (
+        <article class="w-60 h-80 bg-white rounded-lg  text-blue-sky p-4 flex flex-col items-start justify-center gap-3 hover:bg-grey-light hover:shadow-md hover:shadow-blue-sky transition-all">
+          <div class="">
+            <Image
+              src={post.featuredImage.node?.sourceUrl}
+              inferSize={true}
+              alt=""
+              class=""
+            />
+          </div>
+          <div class=" text-center">
+            <p>{post.title}</p>
+            <p>{formatDate(post.date)}</p>
+            <p set:html={truncateText(post.excerpt, 50)} />
+          </div>
+        </article>
+      );
+    })
+  }
+</div>
