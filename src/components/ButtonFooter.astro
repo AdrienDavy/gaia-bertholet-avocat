@@ -9,15 +9,12 @@ type Props = {
 };
 const { classes, styles, url, content } = Astro.props;
 const href = replaceUrls(url || "#", Astro.url.host);
+const buttonClasses = joinClasses(
+  "button-footer inline-block uppercase font-bold tracking-[1.3px] bg-blue-light rounded-full",
+  classes,
+);
 ---
 
-<button
-  type="button"
-  class={joinClasses(
-    "inline-block uppercase font-bold tracking-[1.3px] bg-blue-light rounded-full py-3 px-6",
-    classes,
-  )}
-  style={styles}
->
+<button type="button" class={buttonClasses} style={styles}>
   <a href={href} set:html={content} />
 </button>

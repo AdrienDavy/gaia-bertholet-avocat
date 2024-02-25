@@ -4,6 +4,7 @@ import BlockRenderer from "../components/BlockRenderer.astro";
 import PostRenderer from "../components/PostRenderer.astro";
 import CommonHead from "../components/CommonHead.astro";
 import { wordpressQuery } from "../utils/wordpressQuery.ts";
+import Footer from "../components/Footer.astro";
 
 interface AstroParams {
   slug?: string;
@@ -44,7 +45,6 @@ const data = await wordpressQuery({
     uri: astroParams.slug || "/",
   },
 });
-
 const blocks = (data.nodeByUri?.blocks || []) as Block[];
 const seo = data.nodeByUri?.seo;
 
@@ -76,5 +76,6 @@ export const dataPosts = await wordpressQuery({
   <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
   <body>
     <BlockRenderer blocks={blocks} />
+    <Footer blocks={blocks} />
   </body>
 </html>

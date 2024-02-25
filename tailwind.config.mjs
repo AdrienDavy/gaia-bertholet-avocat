@@ -9,6 +9,7 @@ export default {
 			colors: {
 				"starlight": "var(--color--starlight)",
 				"blue-light": "var(--color--blue-light)",
+				"blue-med": "var(--color--blue-med)",
 				"blue-sky": "var(--color--blue-sky)",
 				"grey-light": "var(--color--grey-light)",
 			},

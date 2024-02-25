@@ -6,18 +6,23 @@ import NavigationLink from "./NavigationLink.astro";
 import NavigationSubmenu from "./NavigationSubmenu.astro";
 import Button from "./Button.astro";
 import Heading from "./Heading.astro";
+import Paragraph from "./Paragraph.astro";
 import Cover from "./Cover.astro";
 import PostRenderer from "./PostRenderer.astro";
 import ListItem from "./ListItem.astro";
+import SocialLink from "./SocialLink.astro";
+import CodeBlock from "./CodeBlock.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
 import { dataPosts } from "../pages/[...slug].astro";
+import { joinClasses } from "../utils/joinClasses";
 type Props = {
   blocks: Block[];
 };
 
 const { blocks } = Astro.props;
+const homeUrl = Astro.url;
 ---
 
 {
@@ -36,6 +41,7 @@ const { blocks } = Astro.props;
             alt={block.attributes?.alt || ""}
           />
         );
+
       case "core/button":
         return (
           <Button
@@ -107,22 +113,31 @@ const { blocks } = Astro.props;
         );
       case "core/paragraph":
         return (
-          <p
-            class={classes}
-            style={styles}
-            set:html={block.attributes?.content}
+          <Paragraph
+            classes={classes}
+            styles={styles}
+            content={block.attributes?.content}
           />
         );
+      case "core/code":
+        // Exemple de logique pour un bloc de code sans attributs spécifiques
+        return <CodeBlock classes={classes} styles={styles} />;
+
       case "core/columns":
       case "core/column":
       case "core/post-content":
       case "core/group":
       case "core/buttons":
-      case "core/list":
         return (
           <div style={styles} class={classes}>
             <BlockRendererInner blocks={block.innerBlocks || []} />
           </div>
+        );
+      case "core/list":
+        return (
+          <ul style={styles} class={classes}>
+            <BlockRendererInner blocks={block.innerBlocks || []} />
+          </ul>
         );
       case "core/list-item":
         return (
@@ -132,13 +147,29 @@ const { blocks } = Astro.props;
             content={block.attributes?.content}
           />
         );
+
+      case "core/social-links":
+        return (
+          <div class={classes} style={styles}>
+            <BlockRendererInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/social-link":
+        return (
+          <SocialLink
+            url={block.attributes?.url}
+            service={block.attributes?.service}
+            classes={classes}
+            styles={styles}
+          />
+        );
       case "core/site-logo":
         return (
           <div style={styles} class={classes}>
-            <a href="/" title="Vers l'accueil">
+            <a href={homeUrl} title="Vers l'accueil">
               <Image
-                height={block.attributes?.height || 50}
-                width={block.attributes?.width || 50}
+                height={block.attributes?.height || 240}
+                width={block.attributes?.width || 240}
                 src={block.attributes?.url || ""}
                 alt=""
               />
@@ -147,8 +178,7 @@ const { blocks } = Astro.props;
         );
       case "core/latest-posts":
         return <PostRenderer dataPosts={dataPosts} />;
-      case "core/template-part":
-        return <BlockRendererInner blocks={block.innerBlocks || []} />;
+
       default:
         return null;
     }

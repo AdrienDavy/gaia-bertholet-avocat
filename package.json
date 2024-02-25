@@ -15,6 +15,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/react": "^18.2.57",
@@ -28,6 +29,7 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "postcss-nesting": "^12.0.3",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0"
   }

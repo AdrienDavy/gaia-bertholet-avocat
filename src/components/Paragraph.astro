@@ -1,7 +1,5 @@
 ---
 import { processContentAndReplaceUrls } from "../utils/processContentAndReplaceUrls";
-
-import { joinClasses } from "../utils/joinClasses";
 type Props = {
   styles: string;
   classes: string;
@@ -13,11 +11,6 @@ const newContent = processContentAndReplaceUrls(
   `${import.meta.env.PUBLIC_PROTOCOL}${import.meta.env.PUBLIC_WP_URL}`,
   Astro.url.origin,
 );
-
-const allClasses = joinClasses(
-  classes,
-  "py-2 [&_a]:hover:text-blue-800 [&_a]:transition-all",
-);
 ---
 
-<li class={allClasses} style={styles} set:html={newContent} />
+<p style={styles} class={classes} set:html={newContent} />

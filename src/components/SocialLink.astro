@@ -1,0 +1,28 @@
+---
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+
+type Props = {
+  classes: string;
+  styles: string;
+  service: string;
+  url: string;
+};
+const { classes, styles, service, url } = Astro.props;
+---
+
+<div class={classes} style={styles}>
+  {
+    service === "linkedin" && (
+      <a
+        href={url}
+        class="text-xl hover:text-blue-800 transition-all"
+        aria-label="LinkedIn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <FontAwesomeIcon icon={faLinkedinIn} />
+      </a>
+    )
+  }
+</div>

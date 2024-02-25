@@ -1,0 +1,146 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+
+import { getBlockStyling, type Block } from "@wp-block-tools/styles";
+import Paragraph from "./Paragraph.astro";
+import Heading from "./Heading.astro";
+import ButtonFooter from "./ButtonFooter.astro";
+import CodeBlock from "./CodeBlock.astro";
+import FooterInner from "./Footer.astro";
+import ListItem from "./ListItem.astro";
+import SocialLink from "./SocialLink.astro";
+import { Image } from "astro:assets";
+
+type Props = {
+  blocks: Block[];
+};
+
+const { blocks } = Astro.props;
+let columnIndex = 0;
+const homeUrl = Astro.url;
+---
+
+{
+  blocks.map((block) => {
+    const { styles, classes } = getBlockStyling(block);
+
+    switch (block.name) {
+      case "core/image":
+        return (
+          <Image
+            src={block.attributes?.url}
+            height={block.attributes?.height}
+            width={block.attributes?.width}
+            class={classes}
+            style={styles}
+            alt={block.attributes?.alt || ""}
+          />
+        );
+
+      case "core/button":
+        return (
+          <ButtonFooter
+            classes={classes}
+            styles={styles}
+            url={block.attributes?.url}
+            content={block.attributes?.content || ""}
+          />
+        );
+      case "core/post-title":
+      case "core/heading":
+        return (
+          <Heading
+            level={block.attributes?.level || 2}
+            classes={classes}
+            styles={styles}
+            content={block.attributes?.content || ""}
+          />
+        );
+
+      case "core/paragraph":
+        return (
+          <Paragraph
+            classes={classes}
+            styles={styles}
+            content={block.attributes?.content}
+          />
+        );
+      case "core/code":
+        // Exemple de logique pour un bloc de code sans attributs spécifiques
+        return <CodeBlock classes={classes} styles={styles} />;
+
+      case "core/columns":
+      case "core/column":
+        const columnClasses = joinClasses("column", classes);
+        return (
+          <div style={styles} class={columnClasses}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/group":
+        const groupClasses = joinClasses("group", classes);
+        return (
+          <div style={styles} class={groupClasses}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/buttons":
+        return <FooterInner blocks={block.innerBlocks || []} />;
+      case "core/list":
+        return (
+          <ul style={styles} class={classes}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </ul>
+        );
+      case "core/list-item":
+        return (
+          <ListItem
+            classes={classes}
+            styles={styles}
+            content={block.attributes?.content}
+          />
+        );
+
+      case "core/social-links":
+        return (
+          <div class={classes} style={styles}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/social-link":
+        return (
+          <SocialLink
+            url={block.attributes?.url}
+            service={block.attributes?.service}
+            classes={classes}
+            styles={styles}
+          />
+        );
+      case "core/site-logo":
+        return (
+          <div style={styles} class={classes}>
+            <a class="image-footer" href={homeUrl} title="Vers l'accueil">
+              <Image
+                height={block.attributes?.height || 256}
+                width={block.attributes?.width || 256}
+                src={block.attributes?.url || ""}
+                alt=""
+              />
+            </a>
+          </div>
+        );
+      case "core/template-part":
+        if (block.attributes?.slug === "common-footer") {
+          return (
+            <footer class="relative rounded-tl-[250px] sm:rounded-tl-[427px]">
+              <FooterInner blocks={block.innerBlocks || []} />
+              <div class=" -z-10 w-full h-full absolute bg-blue-med right-3 sm:right-12 bottom-0 rounded-tl-[250px] sm:rounded-tl-[427px]" />
+              <div class=" -z-20 w-full h-full absolute bg-blue-light right-12 sm:right-24 bottom-0 rounded-tl-[250px] sm:rounded-tl-[427px]" />
+            </footer>
+          );
+        }
+      default:
+        return null;
+    }
+  })
+}
