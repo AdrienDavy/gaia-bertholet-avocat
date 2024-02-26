@@ -17,7 +17,7 @@ type Props = {
 
 const { blocks } = Astro.props;
 let columnIndex = 0;
-const homeUrl = Astro.url;
+const homeUrl = Astro.url.origin;
 ---
 
 {
@@ -119,10 +119,10 @@ const homeUrl = Astro.url;
       case "core/site-logo":
         return (
           <div style={styles} class={classes}>
-            <a class="image-footer" href={homeUrl} title="Vers l'accueil">
+            <a href={homeUrl} title="Vers l'accueil">
               <Image
-                height={block.attributes?.height || 256}
-                width={block.attributes?.width || 256}
+                height={block.attributes?.height || 180}
+                width={block.attributes?.width || 180}
                 src={block.attributes?.url || ""}
                 alt=""
               />

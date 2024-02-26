@@ -6,13 +6,10 @@ type Props = {
   classes: string;
 };
 const { styles, classes } = Astro.props;
-const allClasses = joinClasses(
-  classes,
-  "w-full justify-between sm:flex flex-col",
-);
+const allClasses = joinClasses(classes, "w-full flex-between max-sm:flex-col");
 ---
 
-<nav class="md:w-10/12">
+<nav class="w-10/12">
   <ul class={allClasses} style={styles}>
     <slot />
   </ul>

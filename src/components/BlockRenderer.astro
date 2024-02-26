@@ -15,20 +15,42 @@ import CodeBlock from "./CodeBlock.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
-import { dataPosts } from "../pages/[...slug].astro";
 import { joinClasses } from "../utils/joinClasses";
+import LatestPosts from "./LatestPosts.astro";
+import type { Post } from "../types.d.ts";
+
 type Props = {
   blocks: Block[];
+  posts: Post[];
+  renderLatestPosts: boolean;
 };
 
-const { blocks } = Astro.props;
-const homeUrl = Astro.url;
+const { blocks, posts, renderLatestPosts } = Astro.props;
 ---
 
 {
   blocks.map((block) => {
     const { styles, classes } = getBlockStyling(block);
-
+    if (block.name === "core/latest-posts" && renderLatestPosts) {
+      return (
+        <div style={styles} class={classes}>
+          <LatestPosts
+            posts={posts || []}
+            postsToShow={block.attributes?.postsToShow || 2}
+            displayPostContent={block.attributes?.displayPostContent || true}
+            excerptLength={block.attributes?.excerptLength || 30}
+            displayPostDate={block.attributes?.displayPostDate || true}
+            postLayout={block.attributes?.postLayout || ""}
+            displayFeaturedImage={block.attributes?.displayFeaturedImage || ""}
+            featuredImageAlign={block.attributes?.featuredImageAlign || ""}
+            featuredImageSizeSlug={
+              block.attributes?.featuredImageSizeSlug || ""
+            }
+            textColor={block.attributes?.textColor || ""}
+          />
+        </div>
+      );
+    }
     switch (block.name) {
       case "core/image":
         return (
@@ -75,41 +97,12 @@ const homeUrl = Astro.url;
             minHeight={block.attributes?.minHeight}
             minHeightUnit={block.attributes?.minHeightUnit}
           >
-            <BlockRendererInner blocks={block.innerBlocks || []} />
+            <BlockRendererInner
+              blocks={block.innerBlocks || []}
+              renderLatestPosts={renderLatestPosts}
+              posts={posts || []}
+            />
           </Cover>
-        );
-      case "core/navigation-submenu":
-        return (
-          <NavigationSubmenu
-            classes={classes}
-            styles={styles}
-            label={block.attributes?.label || ""}
-            url={block.attributes?.url || ""}
-          >
-            {block.innerBlocks?.map((link) => (
-              <NavigationSubLink
-                classes={classes}
-                styles={styles}
-                label={link.attributes?.label || ""}
-                url={link.attributes?.url || ""}
-              />
-            ))}
-          </NavigationSubmenu>
-        );
-      case "core/navigation-link":
-        return (
-          <NavigationLink
-            classes={classes}
-            styles={styles}
-            label={block.attributes?.label || ""}
-            url={block.attributes?.url || ""}
-          />
-        );
-      case "core/navigation":
-        return (
-          <Navigation classes={classes} styles={styles}>
-            <BlockRendererInner blocks={block.innerBlocks || []} />
-          </Navigation>
         );
       case "core/paragraph":
         return (
@@ -119,10 +112,6 @@ const homeUrl = Astro.url;
             content={block.attributes?.content}
           />
         );
-      case "core/code":
-        // Exemple de logique pour un bloc de code sans attributs spécifiques
-        return <CodeBlock classes={classes} styles={styles} />;
-
       case "core/columns":
       case "core/column":
       case "core/post-content":
@@ -130,13 +119,21 @@ const homeUrl = Astro.url;
       case "core/buttons":
         return (
           <div style={styles} class={classes}>
-            <BlockRendererInner blocks={block.innerBlocks || []} />
+            <BlockRendererInner
+              blocks={block.innerBlocks || []}
+              renderLatestPosts={renderLatestPosts}
+              posts={posts || []}
+            />
           </div>
         );
       case "core/list":
         return (
           <ul style={styles} class={classes}>
-            <BlockRendererInner blocks={block.innerBlocks || []} />
+            <BlockRendererInner
+              blocks={block.innerBlocks || []}
+              renderLatestPosts={renderLatestPosts}
+              posts={posts || []}
+            />
           </ul>
         );
       case "core/list-item":
@@ -147,37 +144,6 @@ const homeUrl = Astro.url;
             content={block.attributes?.content}
           />
         );
-
-      case "core/social-links":
-        return (
-          <div class={classes} style={styles}>
-            <BlockRendererInner blocks={block.innerBlocks || []} />
-          </div>
-        );
-      case "core/social-link":
-        return (
-          <SocialLink
-            url={block.attributes?.url}
-            service={block.attributes?.service}
-            classes={classes}
-            styles={styles}
-          />
-        );
-      case "core/site-logo":
-        return (
-          <div style={styles} class={classes}>
-            <a href={homeUrl} title="Vers l'accueil">
-              <Image
-                height={block.attributes?.height || 240}
-                width={block.attributes?.width || 240}
-                src={block.attributes?.url || ""}
-                alt=""
-              />
-            </a>
-          </div>
-        );
-      case "core/latest-posts":
-        return <PostRenderer dataPosts={dataPosts} />;
 
       default:
         return null;

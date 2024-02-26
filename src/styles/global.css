@@ -40,7 +40,19 @@
     font-size: 0.67em;
   }
 }
-.image-footer img {
+
+/* --------------------------------------------------------- */
+/* -------------------------HEADER-------------------------- */
+/* --------------------------------------------------------- */
+.nav-logo
+
+
+
+
+/* --------------------------------------------------------- */
+/* -------------------------FOOTER-------------------------- */
+/* --------------------------------------------------------- */
+.footer-logo {
   @apply md:!w-52 md:mt-24 md:min-w-16 !w-32 mt-12;
 }
 
@@ -48,12 +60,12 @@
 footer div:nth-of-type(1) {
   @apply flex-col items-center;
   > div:nth-of-type(1) {
-    @apply flex sm:flex-wrap md:items-stretch sm:flex-row;
+    @apply flex sm:flex-wrap md:items-stretch sm:flex-row justify-center;
   }
 }
 /* Cible tous les enfants div direct de la première div dans footer */
 footer div:nth-of-type(1) > div:nth-of-type(1) > .column {
-  @apply flex-grow flex-shrink-0 sm:basis-[300px] !py-2 sm:!py-5;
+  @apply flex-grow flex-shrink-0 sm:basis-[300px] !py-2 sm:!py-5 flex justify-center;
   .group {
     @apply !px-0 flex sm:inline;
     ul > li {
