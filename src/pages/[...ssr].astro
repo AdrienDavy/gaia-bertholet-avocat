@@ -1,0 +1,31 @@
+---
+import BlockRenderer from "../components/BlockRenderer.astro";
+import CommonHead from "../components/CommonHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+export const prerender = false;
+
+const { ssr } = Astro.params;
+
+const response = await fetch(
+  `${Astro.url.origin}/api/page-data${ssr ? `/${ssr}` : ""}.json`,
+);
+const { data } = await response.json();
+if (!data) {
+  return Astro.redirect("/404");
+}
+const { seo, blocks, language, latestPosts } = data;
+---
+
+<html lang={language}>
+  <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
+  <body>
+    <Header blocks={blocks} />
+    <BlockRenderer
+      blocks={blocks}
+      renderLatestPosts={true}
+      posts={latestPosts}
+    />
+    <Footer blocks={blocks} />
+  </body>
+</html>

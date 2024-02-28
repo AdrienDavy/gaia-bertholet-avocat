@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import { formatDate } from "../utils/formatDate";
+import { truncateText } from "../utils/truncateText";
+
+const { searchParams } = Astro.url;
+const params = Object.fromEntries(searchParams || {});
+const response = await fetch(`${Astro.url.origin}/api/articles.json`);
+const { posts } = await response.json();
+const searchTerm = params.article || "";
+let filterArticles = posts.filter((post: any) =>
+  post.title.toLowerCase().includes(searchTerm.toLowerCase()),
+);
+---
+
+<form method="GET" class="w-full py-5 px-10 flex flex-col justify-center">
+  <div class="w-full py-5 flex flex-col justify-center">
+    <input
+      value={searchTerm}
+      type="search"
+      name="article"
+      class="w-full sm:w-8/12 text-blue-sky mx-auto inline-block uppercase font-bold tracking-[1.3px] border border-solid border-blue-light focus:border focus:border-solid focus:border-blue-800
+      rounded-sm py-3 px-6"
+      placeholder="Rechercher par mot-clé..."
+    />
+  </div>
+  <button
+    type="submit"
+    class="text-white w-1/4 mx-auto inline-block uppercase font-bold tracking-[1.3px] bg-blue-sky rounded-full py-3 px-6"
+    >Rechercher</button
+  >
+</form>
+<div class="grid gap-10 grid-cols-1 sm:grid-cols-2 !mx-5 md:!mx-auto">
+  {
+    filterArticles.map((post: any) => {
+      return (
+        <a
+          href={post.uri}
+          class="shadow-lg hover:bg-blue-light transition-all rounded-xl hover:shadow-2xl hover:scale-[0.99]"
+        >
+          {!!post.featuredImage && (
+            <Image
+              src={post.featuredImage.node.sourceUrl}
+              height={post.featuredImage.node.mediaDetails.height}
+              width={post.featuredImage.node.mediaDetails.width}
+              inferSize={true}
+              alt={post.featuredImage.node.altText || ""}
+              class="h-40 w-full object-cover rounded-t-xl"
+            />
+          )}
+          <div class=" p-2 flex flex-col items-center text-center text-blue-sky">
+            <p class="pt-2 text-3xl">
+              <strong>{post.title}</strong>
+            </p>
+            <p class=" pb-2 text-md">{formatDate(post.date)}</p>
+            <p set:html={truncateText(post.excerpt, 50)} class=" !text-xl" />
+          </div>
+        </a>
+      );
+    })
+  }
+</div>

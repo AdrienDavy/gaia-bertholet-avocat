@@ -1,21 +1,14 @@
 ---
 import BlockRendererInner from "./BlockRenderer.astro";
-import NavigationSubLink from "./NavigationSubLink.astro";
-import Navigation from "./Navigation.astro";
-import NavigationLink from "./NavigationLink.astro";
-import NavigationSubmenu from "./NavigationSubmenu.astro";
 import Button from "./Button.astro";
 import Heading from "./Heading.astro";
 import Paragraph from "./Paragraph.astro";
 import Cover from "./Cover.astro";
-import PostRenderer from "./PostRenderer.astro";
 import ListItem from "./ListItem.astro";
-import SocialLink from "./SocialLink.astro";
-import CodeBlock from "./CodeBlock.astro";
+import ArticleSearch from "./ArticleSearch.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
-import { joinClasses } from "../utils/joinClasses";
 import LatestPosts from "./LatestPosts.astro";
 import type { Post } from "../types.d.ts";
 
@@ -52,6 +45,22 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
       );
     }
     switch (block.name) {
+      case "astro/article-search":
+        return <ArticleSearch />;
+      case "core/gallery":
+        return (
+          <div style={styles} class={classes}>
+            {(block.innerBlocks || []).map((innerBlock) => (
+              <div>
+                <BlockRendererInner
+                  blocks={[innerBlock]}
+                  renderLatestPosts={renderLatestPosts}
+                  posts={posts || []}
+                />
+              </div>
+            ))}
+          </div>
+        );
       case "core/image":
         return (
           <Image

@@ -21,6 +21,13 @@ export async function getStaticPaths() {
           pages(first: 10000) {
             nodes {
               uri
+              blocks
+            }
+          }
+          posts(first: 10000) {
+            nodes {
+              uri
+              blocks
             }
           }
         }
@@ -29,9 +36,26 @@ export async function getStaticPaths() {
   });
   try {
     const { data } = await response.json();
-    return data.pages.nodes.map((page: any) => ({
-      params: { slug: page.uri === "/" ? undefined : page.uri },
-    }));
+    return [...data.pages.nodes, ...data.posts.nodes]
+      .filter((page: any) => {
+        let found = false;
+        const hasArticleSearch = (blocks: Block[]) => {
+          for (let block of blocks) {
+            if (block.name === "astro/article-search") {
+              found = true;
+              break;
+            }
+            if (block.innerBlocks) {
+              hasArticleSearch(block.innerBlocks);
+            }
+          }
+        };
+        hasArticleSearch(page.blocks);
+        return !found;
+      })
+      .map((page: any) => ({
+        params: { slug: page.uri === "/" ? undefined : page.uri },
+      }));
   } catch (error) {
     console.error(
       "Erreur lors de la requête ou lors du traitement des données :",
@@ -40,6 +64,7 @@ export async function getStaticPaths() {
     throw new Error("Impossible d'extraire les données");
   }
 }
+
 const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   method: "POST",
   headers: {
@@ -48,8 +73,11 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   body: JSON.stringify({
     query: `
     query PageQuery($uri: String!) {
+      allSettings {
+    generalSettingsLanguage
+  }
       nodeByUri(uri: $uri) {
-        ... on Page {
+        ... on ContentNode {
           id
           blocks
           seo {
@@ -69,6 +97,7 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
 const { data } = await response.json();
 const blocks = (data.nodeByUri?.blocks || []) as Block[];
 const seo = data.nodeByUri?.seo;
+const language = data.allSettings.generalSettingsLanguage;
 
 const postsResponse = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   method: "POST",
@@ -104,7 +133,7 @@ const postsData = await postsResponse.json();
 const latestPosts = postsData.data.posts.nodes;
 ---
 
-<html lang="en">
+<html lang={language}>
   <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
   <body>
     <Header blocks={blocks} />

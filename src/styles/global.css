@@ -17,27 +17,33 @@
   }
 
   h1 {
-    font-size: 2em;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
   }
 
   h2 {
-    font-size: 1.5em;
+    font-size: clamp(1.375rem, 4.5vw, 2.25rem);
   }
 
   h3 {
-    font-size: 1.17em;
+    font-size: clamp(1.25rem, 4vw, 2rem);
   }
 
   h4 {
-    font-size: 1em;
+    font-size: clamp(1.125rem, 3.5vw, 1.75rem);
   }
 
   h5 {
-    font-size: 0.83em;
+    font-size: clamp(1rem, 3vw, 1.5rem);
   }
 
   h6 {
-    font-size: 0.67em;
+    font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+  }
+  p,
+  li,
+  a,
+  input::placeholder {
+    font-size: clamp(1rem, 2vw, 1.125rem);
   }
 }
 
