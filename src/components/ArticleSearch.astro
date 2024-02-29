@@ -7,6 +7,7 @@ const { searchParams } = Astro.url;
 const params = Object.fromEntries(searchParams || {});
 const response = await fetch(`${Astro.url.origin}/api/articles.json`);
 const { posts } = await response.json();
+console.log("🚀 ~ posts:", posts);
 const searchTerm = params.article || "";
 let filterArticles = posts.filter((post: any) =>
   post.title.toLowerCase().includes(searchTerm.toLowerCase()),

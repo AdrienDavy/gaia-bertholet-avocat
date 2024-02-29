@@ -6,6 +6,7 @@ import Paragraph from "./Paragraph.astro";
 import Cover from "./Cover.astro";
 import ListItem from "./ListItem.astro";
 import ArticleSearch from "./ArticleSearch.astro";
+import VideoEmbed from "./VideoEmbed.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
@@ -24,6 +25,7 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
 {
   blocks.map((block) => {
     const { styles, classes } = getBlockStyling(block);
+
     if (block.name === "core/latest-posts" && renderLatestPosts) {
       return (
         <div style={styles} class={classes}>
@@ -45,6 +47,14 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
       );
     }
     switch (block.name) {
+      case "core/embed":
+        return (
+          <VideoEmbed
+            url={block.attributes?.url}
+            classes={classes}
+            styles={styles}
+          />
+        );
       case "astro/article-search":
         return <ArticleSearch />;
       case "core/gallery":
