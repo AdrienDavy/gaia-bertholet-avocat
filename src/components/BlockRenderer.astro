@@ -11,43 +11,41 @@ import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
 import LatestPosts from "./LatestPosts.astro";
-import type { Post } from "../types.d.ts";
 
 type Props = {
   postId: number;
   blocks: Block[];
-  posts: Post[];
-  renderLatestPosts: boolean;
 };
 
-const { postId, blocks, posts, renderLatestPosts } = Astro.props;
+const { postId, blocks } = Astro.props;
 ---
 
 {
   blocks.map((block) => {
     const { styles, classes } = getBlockStyling(block);
 
-    if (block.name === "core/latest-posts" && renderLatestPosts) {
-      return (
-        <div style={styles} class={classes}>
-          <LatestPosts
-            posts={posts || []}
-            postsToShow={block.attributes?.postsToShow || 2}
-            displayPostContent={block.attributes?.displayPostContent || true}
-            excerptLength={block.attributes?.excerptLength || 30}
-            displayPostDate={block.attributes?.displayPostDate || true}
-            postLayout={block.attributes?.postLayout || ""}
-            displayFeaturedImage={block.attributes?.displayFeaturedImage || ""}
-            featuredImageAlign={block.attributes?.featuredImageAlign || ""}
-            featuredImageSizeSlug={
-              block.attributes?.featuredImageSizeSlug || ""
-            }
-            textColor={block.attributes?.textColor || ""}
-          />
-        </div>
-      );
-    }
     switch (block.name) {
+      case "core/latest-posts":
+        return (
+          <div style={styles} class={classes}>
+            <LatestPosts
+              postsToShow={block.attributes?.postsToShow || 2}
+              displayPostContent={block.attributes?.displayPostContent || true}
+              excerptLength={block.attributes?.excerptLength || 30}
+              displayPostDate={block.attributes?.displayPostDate || true}
+              postLayout={block.attributes?.postLayout || ""}
+              displayFeaturedImage={
+                block.attributes?.displayFeaturedImage || ""
+              }
+              featuredImageAlign={block.attributes?.featuredImageAlign || ""}
+              featuredImageSizeSlug={
+                block.attributes?.featuredImageSizeSlug || ""
+              }
+              textColor={block.attributes?.textColor || ""}
+            />
+          </div>
+        );
+
       case "core/embed":
         return (
           <VideoEmbed
@@ -63,12 +61,7 @@ const { postId, blocks, posts, renderLatestPosts } = Astro.props;
           <div style={styles} class={classes}>
             {(block.innerBlocks || []).map((innerBlock) => (
               <div>
-                <BlockRendererInner
-                  postId={postId}
-                  blocks={[innerBlock]}
-                  renderLatestPosts={renderLatestPosts}
-                  posts={posts || []}
-                />
+                <BlockRendererInner postId={postId} blocks={[innerBlock]} />
               </div>
             ))}
           </div>
@@ -124,8 +117,6 @@ const { postId, blocks, posts, renderLatestPosts } = Astro.props;
             <BlockRendererInner
               postId={postId}
               blocks={block.innerBlocks || []}
-              renderLatestPosts={renderLatestPosts}
-              posts={posts || []}
             />
           </Cover>
         );
@@ -147,8 +138,6 @@ const { postId, blocks, posts, renderLatestPosts } = Astro.props;
             <BlockRendererInner
               postId={postId}
               blocks={block.innerBlocks || []}
-              renderLatestPosts={renderLatestPosts}
-              posts={posts || []}
             />
           </div>
         );
@@ -158,8 +147,6 @@ const { postId, blocks, posts, renderLatestPosts } = Astro.props;
             <BlockRendererInner
               postId={postId}
               blocks={block.innerBlocks || []}
-              renderLatestPosts={renderLatestPosts}
-              posts={posts || []}
             />
           </ul>
         );

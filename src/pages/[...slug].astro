@@ -98,51 +98,13 @@ const blocks = (data.nodeByUri?.blocks || []) as Block[];
 const seo = data.nodeByUri?.seo;
 const language = data.allSettings.generalSettingsLanguage;
 const postId = data.nodeByUri?.databaseId;
-
-const postsResponse = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    query: `
-      {
-        posts(first: 5, where: {orderby: {field: DATE, order: DESC}}) {
-          nodes {
-            id
-            title
-            date
-            excerpt
-            slug
-            content
-            uri
-            featuredImage {
-              node {
-                sourceUrl
-                altText
-              }
-            }
-          }
-        }
-      }
-    `,
-  }),
-});
-
-const postsData = await postsResponse.json();
-const latestPosts = postsData.data.posts.nodes;
 ---
 
 <html lang={language}>
   <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
   <body>
     <Header blocks={blocks} />
-    <BlockRenderer
-      postId={postId}
-      blocks={blocks}
-      renderLatestPosts={true}
-      posts={latestPosts}
-    />
+    <BlockRenderer postId={postId} blocks={blocks} />
     <Footer blocks={blocks} />
   </body>
 </html>

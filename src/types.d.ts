@@ -1,6 +1,6 @@
 // /src/types/types.d.ts
 export type Post = {
-  id: string;
+  postId: string;
   title: string;
   date: string;
   excerpt: string;

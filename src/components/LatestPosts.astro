@@ -1,10 +1,9 @@
 ---
-import type { Post } from "../types";
 import { truncateText } from "../utils/truncateText";
 import { formatDate } from "../utils/formatDate";
-
+const response = await fetch(`${Astro.url.origin}/api/articles.json`);
+const { posts } = await response.json();
 interface Props {
-  posts: Post[];
   postsToShow?: number;
   displayPostContent?: boolean;
   excerptLength?: number;
@@ -20,7 +19,6 @@ interface Props {
 }
 
 const {
-  posts,
   postsToShow,
   displayPostContent,
   excerptLength,
@@ -53,7 +51,7 @@ const articleUrl = (uri: string) => `${Astro.url.origin}${uri}`;
   class={`${postLayout} sm:flex justify-${featuredImageAlign} text-${textColor} mx-auto sm:w-8/12 justify-between pb-40`}
 >
   {
-    posts.slice(0, postsToShow).map((post) => (
+    posts.slice(0, postsToShow).map((post: any) => (
       <a href={articleUrl(post.uri)}>
         <article class={imageSize(featuredImageSizeSlug || "")}>
           {displayFeaturedImage && post.featuredImage && (
@@ -64,7 +62,9 @@ const articleUrl = (uri: string) => `${Astro.url.origin}${uri}`;
             />
           )}
           <div class="text-center">
-            <h2>{post.title}</h2>
+            <h2 transition:name={`post-title-${post.databaseId}`}>
+              {post.title}
+            </h2>
             {displayPostDate && <p>{formatDate(post.date)}</p>}
             {displayPostContent && (
               <div set:html={truncateText(post.excerpt, excerptLength || 30)} />
