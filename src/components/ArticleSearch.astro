@@ -7,11 +7,19 @@ const { searchParams } = Astro.url;
 const params = Object.fromEntries(searchParams || {});
 const response = await fetch(`${Astro.url.origin}/api/articles.json`);
 const { posts } = await response.json();
-console.log("🚀 ~ posts:", posts);
+
 const searchTerm = params.article || "";
 let filterArticles = posts.filter((post: any) =>
   post.title.toLowerCase().includes(searchTerm.toLowerCase()),
 );
+const page = searchParams.get("page");
+searchParams.delete("page");
+const searchParamsString = searchParams.toString();
+const pageSize = 3;
+const totalPages = Math.ceil(filterArticles.length / pageSize);
+const pageNumber = page ? (isNaN(parseInt(page)) ? 1 : parseInt(page)) : 1;
+const offset = (pageNumber - 1) * pageSize;
+filterArticles = filterArticles.slice(offset, offset + pageSize);
 ---
 
 <form method="GET" class="w-full py-5 px-10 flex flex-col justify-center">
@@ -59,5 +67,17 @@ let filterArticles = posts.filter((post: any) =>
         </a>
       );
     })
+  }
+</div>
+<div class="flex gap-2 justify-center py-2">
+  {
+    Array.from({ length: totalPages }).map((_, index) => (
+      <a
+        class={`block px-3 py-2 rounded-md ${index + 1 === pageNumber ? `bg-blue-sky text-starlight` : ` bg-grey-light text-blue-sky hover:bg-blue-light transition-all`}`}
+        href={`?${searchParamsString ? `&page=${index + 1}` : `page=${index + 1}`}`}
+      >
+        {index + 1}
+      </a>
+    ))
   }
 </div>
