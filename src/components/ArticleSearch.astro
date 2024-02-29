@@ -5,6 +5,7 @@ import { truncateText } from "../utils/truncateText";
 
 const { searchParams } = Astro.url;
 const params = Object.fromEntries(searchParams || {});
+
 const response = await fetch(`${Astro.url.origin}/api/articles.json`);
 const { posts } = await response.json();
 
@@ -57,15 +58,15 @@ filterArticles = filterArticles.slice(offset, offset + pageSize);
               class="h-40 w-full object-cover rounded-t-xl"
             />
           )}
-          <div class=" p-2 flex flex-col items-center text-center text-blue-sky">
+          <div class="p-2 flex flex-col items-center text-center text-blue-sky">
             <p
               class="pt-2 text-3xl"
               transition:name={`post-title-${post.databaseId}`}
             >
               <strong>{post.title}</strong>
             </p>
-            <p class=" pb-2 text-md">{formatDate(post.date)}</p>
-            <p set:html={truncateText(post.excerpt, 50)} class=" !text-xl" />
+            <p class="pb-2 text-md">{formatDate(post.date)}</p>
+            <p set:html={truncateText(post.excerpt, 50)} />
           </div>
         </a>
       );

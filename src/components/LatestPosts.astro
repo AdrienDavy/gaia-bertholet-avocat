@@ -1,6 +1,7 @@
 ---
 import { truncateText } from "../utils/truncateText";
 import { formatDate } from "../utils/formatDate";
+import { Image } from "astro:assets";
 const response = await fetch(`${Astro.url.origin}/api/articles.json`);
 const { posts } = await response.json();
 interface Props {
@@ -52,25 +53,30 @@ const articleUrl = (uri: string) => `${Astro.url.origin}${uri}`;
 >
   {
     posts.slice(0, postsToShow).map((post: any) => (
-      <a href={articleUrl(post.uri)}>
-        <article class={imageSize(featuredImageSizeSlug || "")}>
-          {displayFeaturedImage && post.featuredImage && (
-            <img
-              src={post.featuredImage.node.sourceUrl}
-              alt={post.featuredImage.node.altText}
-              class="object-cover h-full w-full"
-            />
-          )}
-          <div class="text-center">
-            <h2 transition:name={`post-title-${post.databaseId}`}>
-              {post.title}
-            </h2>
-            {displayPostDate && <p>{formatDate(post.date)}</p>}
-            {displayPostContent && (
-              <div set:html={truncateText(post.excerpt, excerptLength || 30)} />
-            )}
-          </div>
-        </article>
+      <a
+        href={post.uri}
+        class="bg-starlight shadow-lg hover:bg-blue-light transition-all rounded-xl hover:shadow-2xl hover:scale-[0.99]"
+      >
+        {!!post.featuredImage && (
+          <Image
+            src={post.featuredImage.node.sourceUrl}
+            height={post.featuredImage.node.mediaDetails.height}
+            width={post.featuredImage.node.mediaDetails.width}
+            inferSize={true}
+            alt={post.featuredImage.node.altText || ""}
+            class="h-40 w-full object-cover rounded-t-xl"
+          />
+        )}
+        <div class="p-6 flex flex-col items-center text-center text-blue-sky">
+          <p
+            class="pt-2 text-3xl"
+            transition:name={`post-title-${post.databaseId}`}
+          >
+            <strong>{post.title}</strong>
+          </p>
+          <p class="pb-2 text-md">{formatDate(post.date)}</p>
+          <p set:html={truncateText(post.excerpt, 50)} />
+        </div>
       </a>
     ))
   }
