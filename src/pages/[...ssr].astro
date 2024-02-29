@@ -14,7 +14,7 @@ const { data } = await response.json();
 if (!data) {
   return Astro.redirect("/404");
 }
-const { seo, blocks, language, latestPosts } = data;
+const { seo, blocks, language, latestPosts, databaseId } = data;
 ---
 
 <html lang={language}>
@@ -22,6 +22,7 @@ const { seo, blocks, language, latestPosts } = data;
   <body>
     <Header blocks={blocks} />
     <BlockRenderer
+      postId={databaseId}
       blocks={blocks}
       renderLatestPosts={true}
       posts={latestPosts}

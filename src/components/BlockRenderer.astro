@@ -14,12 +14,13 @@ import LatestPosts from "./LatestPosts.astro";
 import type { Post } from "../types.d.ts";
 
 type Props = {
+  postId: number;
   blocks: Block[];
   posts: Post[];
   renderLatestPosts: boolean;
 };
 
-const { blocks, posts, renderLatestPosts } = Astro.props;
+const { postId, blocks, posts, renderLatestPosts } = Astro.props;
 ---
 
 {
@@ -63,6 +64,7 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
             {(block.innerBlocks || []).map((innerBlock) => (
               <div>
                 <BlockRendererInner
+                  postId={postId}
                   blocks={[innerBlock]}
                   renderLatestPosts={renderLatestPosts}
                   posts={posts || []}
@@ -96,6 +98,9 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
       case "core/heading":
         return (
           <Heading
+            transitionName={
+              block.name === "core/post-title" ? `post-title-${postId}` : ""
+            }
             level={block.attributes?.level || 2}
             classes={classes}
             styles={styles}
@@ -117,6 +122,7 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
             minHeightUnit={block.attributes?.minHeightUnit}
           >
             <BlockRendererInner
+              postId={postId}
               blocks={block.innerBlocks || []}
               renderLatestPosts={renderLatestPosts}
               posts={posts || []}
@@ -139,6 +145,7 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
         return (
           <div style={styles} class={classes}>
             <BlockRendererInner
+              postId={postId}
               blocks={block.innerBlocks || []}
               renderLatestPosts={renderLatestPosts}
               posts={posts || []}
@@ -149,6 +156,7 @@ const { blocks, posts, renderLatestPosts } = Astro.props;
         return (
           <ul style={styles} class={classes}>
             <BlockRendererInner
+              postId={postId}
               blocks={block.innerBlocks || []}
               renderLatestPosts={renderLatestPosts}
               posts={posts || []}

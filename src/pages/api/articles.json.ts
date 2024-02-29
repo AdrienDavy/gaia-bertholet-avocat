@@ -12,7 +12,7 @@ export const GET: APIRoute = async () => {
           query AllPosts{        
             posts(first: 10000, where: {orderby: {field: DATE, order: DESC}}) {
               nodes {
-                id
+                databaseId
                 title
                 date
                 excerpt

@@ -58,7 +58,10 @@ filterArticles = filterArticles.slice(offset, offset + pageSize);
             />
           )}
           <div class=" p-2 flex flex-col items-center text-center text-blue-sky">
-            <p class="pt-2 text-3xl">
+            <p
+              class="pt-2 text-3xl"
+              transition:name={`post-title-${post.databaseId}`}
+            >
               <strong>{post.title}</strong>
             </p>
             <p class=" pb-2 text-md">{formatDate(post.date)}</p>

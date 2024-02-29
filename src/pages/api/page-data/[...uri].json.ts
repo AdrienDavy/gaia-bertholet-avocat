@@ -15,7 +15,7 @@ export const GET: APIRoute = async ({ params }) => {
     }
         nodeByUri(uri: $uri) {
           ... on ContentNode {
-            id
+            databaseId
             blocks
             seo {
               metaDesc

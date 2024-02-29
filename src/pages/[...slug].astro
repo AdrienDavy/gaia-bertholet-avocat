@@ -77,7 +77,7 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   }
       nodeByUri(uri: $uri) {
         ... on ContentNode {
-          id
+          databaseId
           blocks
           seo {
             metaDesc
@@ -97,6 +97,7 @@ const { data } = await response.json();
 const blocks = (data.nodeByUri?.blocks || []) as Block[];
 const seo = data.nodeByUri?.seo;
 const language = data.allSettings.generalSettingsLanguage;
+const postId = data.nodeByUri?.databaseId;
 
 const postsResponse = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   method: "POST",
@@ -137,6 +138,7 @@ const latestPosts = postsData.data.posts.nodes;
   <body>
     <Header blocks={blocks} />
     <BlockRenderer
+      postId={postId}
       blocks={blocks}
       renderLatestPosts={true}
       posts={latestPosts}
