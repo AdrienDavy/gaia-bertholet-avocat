@@ -122,7 +122,7 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
         </div>
       )}
       {showErrorMessage && (
-        <div className="bg-red-600 p-4 text-white font-bold">
+        <div className="bg-red-600 p-4 my-4 rounded-md text-white font-bold">
           <p>{errorMessage ? errorMessage : generalErrorMessage}</p>
         </div>
       )}

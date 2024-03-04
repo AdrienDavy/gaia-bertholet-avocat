@@ -45,6 +45,32 @@
   input::placeholder {
     font-size: clamp(1rem, 2vw, 1.125rem);
   }
+
+  body {
+    --sb-track-color: #99e7fe;
+    --sb-thumb-color: #0174cf;
+    --sb-size: 14px;
+  }
+
+  body::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 9px;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    body {
+      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+  }
 }
 
 /* --------------------------------------------------------- */
@@ -54,16 +80,45 @@
 /* --------------------------------------------------------- */
 /* -------------------------CONTACT-------------------------- */
 /* --------------------------------------------------------- */
-.wpcf7-form-control {
-  @apply border border-blue-light p-2 w-full resize-none;
+
+.wpcf7 {
+  @apply flex justify-center bg-starlight shadow-lg p-5 rounded-xl sm:w-3/4 mx-auto;
 }
 
 .wpcf7-form {
-  @apply max-w-sm;
+  @apply max-w-sm sm:w-10/12 grid gap-5;
+
+  p,
+  h3 {
+    @apply text-blue-sky text-center;
+  }
+}
+
+input[type="checkbox"] {
+  @apply mr-5;
+}
+input[name="quiz-672"] {
+  @apply mt-2;
+}
+
+.wpcf7-form-control:not(.wpcf7-acceptance) {
+  @apply p-2 w-full resize-none rounded-md text-blue-sky bg-grey-light;
+}
+
+input[name="your-file"] {
+  @apply bg-starlight;
+}
+
+.wpcf7-quiz {
+  @apply max-w-12 block mx-auto;
+}
+
+.form-error {
+  @apply text-red-600;
 }
 
 .wpcf7-submit {
-  @apply w-full text-white inline-block uppercase font-bold tracking-[1.3px] bg-blue-sky rounded-full py-3 px-6;
+  @apply w-full text-white inline-block uppercase font-bold tracking-[1.3px] bg-blue-sky rounded-full py-3 px-6 cursor-pointer;
 }
 
 /* --------------------------------------------------------- */
