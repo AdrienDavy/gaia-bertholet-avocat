@@ -69,7 +69,7 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
 
                   // Si le champ en cours est le champ du quiz et que sa valeur est vide, ajustez le message d'erreur.
                   if (field.field === "quiz-672" && inputElement.value === "") {
-                    message = "Vous n’avez pas répondu à la question.";
+                    message = "Vous n’avez pas répondu au quiz.";
                   }
 
                   // Créer et insérer l'élément d'erreur uniquement si le parent existe.

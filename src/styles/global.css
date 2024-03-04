@@ -98,7 +98,7 @@ input[type="checkbox"] {
   @apply mr-5;
 }
 input[name="quiz-672"] {
-  @apply mt-2;
+  @apply mt-2 text-center;
 }
 
 .wpcf7-form-control:not(.wpcf7-acceptance) {
