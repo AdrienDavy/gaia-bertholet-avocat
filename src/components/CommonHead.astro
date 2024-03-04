@@ -18,7 +18,10 @@ const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
   body: JSON.stringify({
     query: `
     query MetaDataQuery {
-      cssVariables      
+      cssVariables
+      siteLogo{
+        sourceUrl
+      }
     }
     `,
   }),
@@ -29,7 +32,11 @@ const { title, description } = Astro.props;
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  {
+    !!data.siteLogo?.sourceUrl && (
+      <link rel="icon" href={data.siteLogo.sourceUrl} />
+    )
+  }
   <meta name="viewport" content="width=device-width" />
   <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
