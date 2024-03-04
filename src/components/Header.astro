@@ -1,7 +1,6 @@
 ---
 import { joinClasses } from "../utils/joinClasses";
 import HeaderInner from "./Header.astro";
-
 import { getBlockStyling, type Block } from "@wp-block-tools/styles";
 
 import { Image } from "astro:assets";
@@ -69,31 +68,33 @@ const homeUrl = Astro.url.origin;
         );
       case "core/group":
         const headerClasses = joinClasses(
-          "!fixed w-full bg-starlight !mt-16 z-50 shadow-lg",
+          "header !fixed w-full bg-starlight !mt-16 z-50 shadow-lg transition-all",
           classes,
         );
         const TagName = block.attributes?.tagName || "div";
-        return (
+        return (         
           <TagName style={styles} class={headerClasses}>
             <HeaderInner blocks={block.innerBlocks || []} />
-          </TagName>
+          </TagName>        
         );
       case "core/site-logo":
+        const navlogoClasses = joinClasses(
+          classes,
+          "logo-header",
+        );
         return (
-          <div style={styles} class={classes}>
+          <div style={styles} class={navlogoClasses}>
             <a
-              class="image-footer relative flex flex-col w-[120px] h-16"
+              class="absolute block"
               href={homeUrl}
               title="Vers l'accueil"
             >
-              <div class="absolute top-0 left-0 -translate-y-1/4">
-                <Image
-                  height={block.attributes?.height || 120}
-                  width={block.attributes?.width || 120}
-                  src={block.attributes?.url || ""}
-                  alt=""
-                />
-              </div>
+              <Image
+                height={block.attributes?.height || 120}
+                width={block.attributes?.width || 120}
+                src={block.attributes?.url || ""}
+                alt=""
+              />
             </a>
           </div>
         );
@@ -107,3 +108,24 @@ const homeUrl = Astro.url.origin;
     }
   })
 }
+
+<script>
+ document.addEventListener("scroll", function () {
+    let logo = document.querySelector(".logo-header, .logo-scrolled");
+    let header = document.querySelector(".header"); // Assurez-vous que ce sélecteur est correct
+
+    if (window.scrollY >= 100) {
+      header?.classList.remove("!mt-16");
+      header?.classList.add("!mt-0");
+        logo?.classList.add("logo-scrolled");
+        logo?.classList.remove("logo-header");
+    } else {
+        header?.classList.remove("!mt-0");
+        header?.classList.add("!mt-16");
+        logo?.classList.remove("logo-scrolled");
+        logo?.classList.add("logo-header");
+    }
+});
+
+  </script>
+  

@@ -1,5 +1,6 @@
 ---
 import { replaceUrls } from "../utils/replaceUrls";
+import { joinClasses } from "../utils/joinClasses";
 type Props = {
   styles: string;
   classes: string;
@@ -8,10 +9,14 @@ type Props = {
 };
 const { styles, classes, label, url } = Astro.props;
 const href = replaceUrls(url, Astro.url.host);
+const linkClasses = joinClasses(
+  classes,
+  "navlink block px-6 sm:px-0 sm:py-3 py-12 sm:py-0 text-blue-sky",
+);
 ---
 
-<li class={classes} style={styles}>
-  <a href={href} class="">
+<li class={linkClasses} style={styles}>
+  <a href={href} class="text-xl sm:text-base font-bold sm:font-normal">
     {label}
   </a>
 </li>

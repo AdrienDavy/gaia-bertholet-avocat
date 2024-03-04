@@ -10,17 +10,26 @@ type Props = {
   url: string;
 };
 const { styles, classes, label, url } = Astro.props;
-const allClasses = joinClasses(classes, "group relative flex justify-center");
+const allClasses = joinClasses(
+  classes,
+  "group relative sm:flex justify-center text-blue-sky sm:py-3 py-12",
+);
 const href = replaceUrls(url, Astro.url.host);
 ---
 
 <li class={allClasses} style={styles}>
-  <a href={href} class="block w-full py-3 sm:py-0 px-4">
+  <a
+    href={href}
+    class="block px-6 sm:px-0 py-3 sm:py-0 text-xl font-bold sm:font-normal sm:text-base"
+  >
     {label}
-    <FontAwesomeIcon className="text-xs pl-1" icon={faChevronDown} />
+    <FontAwesomeIcon
+      className="text-xs pl-1 !hidden sm:!inline"
+      icon={faChevronDown}
+    />
   </a>
   <ul
-    class="z-20 sm:hidden sm:group-hover:block bg-starlight sm:absolute sm:top-full sm:text-center whitespace-nowrap py-2 shadow-lg rounded-bl-xl rounded-br-xl"
+    class="pt-[0.85rem] z-20 hidden sm:group-hover:block sm:bg-starlight sm:absolute sm:top-full text-center whitespace-nowrap py-2 sm:shadow-lg rounded-bl-xl rounded-br-xl"
   >
     <slot />
   </ul>

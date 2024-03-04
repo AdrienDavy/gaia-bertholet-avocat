@@ -76,7 +76,19 @@
 /* --------------------------------------------------------- */
 /* -------------------------HEADER-------------------------- */
 /* --------------------------------------------------------- */
+.logo-header {
+  @apply flex flex-col items-center justify-center relative sm:w-[120px] w-auto sm:h-full h-[120px] transition-all;
+  > a > img {
+    @apply transition-all;
+  }
+}
 
+.logo-scrolled {
+  @apply flex flex-col items-center justify-center relative sm:w-[120px] w-auto sm:h-full h-[120px] transition-all;
+  > a > img {
+    @apply w-[50px] transition-all;
+  }
+}
 /* --------------------------------------------------------- */
 /* -------------------------CONTACT-------------------------- */
 /* --------------------------------------------------------- */
