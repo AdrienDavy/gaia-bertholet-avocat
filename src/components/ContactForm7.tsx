@@ -16,7 +16,7 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [acceptanceMessage, setAcceptanceMessage] = useState<string>("");
+  const [generalErrorMessage, setGeneralErrorMessage] = useState<string>("");
   const formWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -53,9 +53,11 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
               }, 4000);
               formElement.reset();
             } else if (result.status === "validation_failed") {
-              console.log("result.quiz", result);
-
               // Traitement des erreurs de validation
+              if (result.invalid_fields.length > 0) {
+                setShowErrorMessage(true);
+                setGeneralErrorMessage(result.message);
+              } else null;
               setShowSuccessMessage(false);
               result.invalid_fields.forEach((field: InvalidField) => {
                 const inputElement = formElement.querySelector(
@@ -121,7 +123,7 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
       )}
       {showErrorMessage && (
         <div className="bg-red-600 p-4 text-white font-bold">
-          <p>{errorMessage}</p>
+          <p>{errorMessage ? errorMessage : generalErrorMessage}</p>
         </div>
       )}
       <div
