@@ -22,6 +22,10 @@ const homeUrl = Astro.url.origin;
 {
   blocks.map((block) => {
     const { styles, classes } = getBlockStyling(block);
+    const classNameWordpress = joinClasses(
+      classes,
+      block.attributes?.className || "",
+    );
 
     switch (block.name) {
       case "core/image":
@@ -30,7 +34,7 @@ const homeUrl = Astro.url.origin;
             src={block.attributes?.url}
             height={block.attributes?.height}
             width={block.attributes?.width}
-            class={classes}
+            class={classNameWordpress}
             style={styles}
             alt={block.attributes?.alt || ""}
           />
@@ -39,7 +43,7 @@ const homeUrl = Astro.url.origin;
       case "core/button":
         return (
           <ButtonFooter
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             url={block.attributes?.url}
             content={block.attributes?.content || ""}
@@ -51,7 +55,7 @@ const homeUrl = Astro.url.origin;
           <Heading
             transitionName=""
             level={block.attributes?.level || 2}
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             content={block.attributes?.content || ""}
           />
@@ -60,7 +64,7 @@ const homeUrl = Astro.url.origin;
       case "core/paragraph":
         return (
           <Paragraph
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             content={block.attributes?.content}
           />
@@ -71,14 +75,20 @@ const homeUrl = Astro.url.origin;
 
       case "core/columns":
       case "core/column":
-        const columnClasses = joinClasses("column", classes);
+        const columnClasses = joinClasses(
+          `${block.attributes?.className || ""} column-footer`,
+          classes,
+        );
         return (
           <div style={styles} class={columnClasses}>
             <FooterInner blocks={block.innerBlocks || []} />
           </div>
         );
       case "core/group":
-        const groupClasses = joinClasses("group", classes);
+        const groupClasses = joinClasses(
+          `${block.attributes?.className || ""} group-footer`,
+          classes,
+        );
         return (
           <div style={styles} class={groupClasses}>
             <FooterInner blocks={block.innerBlocks || []} />
@@ -88,14 +98,14 @@ const homeUrl = Astro.url.origin;
         return <FooterInner blocks={block.innerBlocks || []} />;
       case "core/list":
         return (
-          <ul style={styles} class={classes}>
+          <ul style={styles} class={classNameWordpress}>
             <FooterInner blocks={block.innerBlocks || []} />
           </ul>
         );
       case "core/list-item":
         return (
           <ListItem
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             content={block.attributes?.content}
           />
@@ -103,7 +113,7 @@ const homeUrl = Astro.url.origin;
 
       case "core/social-links":
         return (
-          <div class={classes} style={styles}>
+          <div class={classNameWordpress} style={styles}>
             <FooterInner blocks={block.innerBlocks || []} />
           </div>
         );
@@ -112,13 +122,13 @@ const homeUrl = Astro.url.origin;
           <SocialLink
             url={block.attributes?.url}
             service={block.attributes?.service}
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
           />
         );
       case "core/site-logo":
         return (
-          <div style={styles} class={classes}>
+          <div style={styles} class={classNameWordpress}>
             <a href={homeUrl} title="Vers l'accueil">
               <Image
                 height={block.attributes?.height || 180}

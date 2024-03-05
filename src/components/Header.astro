@@ -20,6 +20,10 @@ const homeUrl = Astro.url.origin;
 {
   blocks.map((block) => {
     const { styles, classes } = getBlockStyling(block);
+    const classNameWordpress = joinClasses(
+      classes,
+      block.attributes?.className || "",
+    );
 
     switch (block.name) {
       case "core/image":
@@ -28,34 +32,37 @@ const homeUrl = Astro.url.origin;
             src={block.attributes?.url}
             height={block.attributes?.height}
             width={block.attributes?.width}
-            class={classes}
+            class={classNameWordpress}
             style={styles}
             alt={block.attributes?.alt || ""}
           />
         );
-      case "core/navigation-submenu":    
+      case "core/navigation-submenu":
         return (
           <NavigationSubmenu
-            classes={classes}
-            styles={styles}
-            label={block.attributes?.label || ""}
-            url={block.attributes?.url || ""}
+          classes={classNameWordpress}
+          styles={styles}
+          label={block.attributes?.label || ""}
+          url={block.attributes?.url || ""}
           >
-            {block.innerBlocks?.map((link) => (              
-              <NavigationSubLink
-                classes={classes}
+          {block.innerBlocks?.map((link) => {
+            const classNameSubLink = joinClasses(classes, link.attributes?.className || "");
+
+            return(              
+            <NavigationSubLink
+                classes={classNameSubLink}
                 styles={styles}
                 label={link.attributes?.label || ""}
                 url={link.attributes?.url || ""}
               />
-            ))}
+          )})}
           </NavigationSubmenu>
         );
       case "core/navigation-link":
         
         return (
           <NavigationLink
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             label={block.attributes?.label || ""}
             url={block.attributes?.url || ""}
@@ -63,13 +70,13 @@ const homeUrl = Astro.url.origin;
         );
       case "core/navigation":
         return (
-          <Navigation classes={classes} styles={styles}>
+          <Navigation classes={classNameWordpress} styles={styles}>
             <HeaderInner blocks={block.innerBlocks || []} />
           </Navigation>
         );
       case "core/group":
         const headerClasses = joinClasses(
-          "header !fixed w-full bg-starlight !mt-16 shadow-lg transition-all",
+          `${block.attributes?.className || ""} header !fixed w-full bg-starlight !mt-16 shadow-lg transition-all`,
           classes,
         );
         const TagName = block.attributes?.tagName || "div";
@@ -81,7 +88,7 @@ const homeUrl = Astro.url.origin;
       case "core/site-logo":
         const navlogoClasses = joinClasses(
           classes,
-          "logo-header",
+          `${block.attributes?.className || ""}logo-header`,
         );
         return (
           <div style={styles} class={navlogoClasses}>

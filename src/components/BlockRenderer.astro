@@ -25,6 +25,10 @@ const { postId, blocks } = Astro.props;
 {
   blocks.map((block) => {
     const { styles, classes } = getBlockStyling(block);
+    const classNameWordpress = joinClasses(
+      classes,
+      block.attributes?.className || "",
+    );
 
     switch (block.name) {
       case "contact-form-7/contact-form-selector":
@@ -37,7 +41,7 @@ const { postId, blocks } = Astro.props;
         );
       case "core/latest-posts":
         return (
-          <div style={styles} class={classes}>
+          <div style={styles} class={classNameWordpress}>
             <LatestPosts
               postsToShow={block.attributes?.postsToShow || 2}
               displayPostContent={block.attributes?.displayPostContent || true}
@@ -60,7 +64,7 @@ const { postId, blocks } = Astro.props;
         return (
           <VideoEmbed
             url={block.attributes?.url}
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
           />
         );
@@ -68,7 +72,7 @@ const { postId, blocks } = Astro.props;
         return <ArticleSearch />;
       case "core/gallery":
         return (
-          <div style={styles} class={classes}>
+          <div style={styles} class={classNameWordpress}>
             {(block.innerBlocks || []).map((innerBlock) => (
               <div>
                 <BlockRendererInner postId={postId} blocks={[innerBlock]} />
@@ -77,25 +81,22 @@ const { postId, blocks } = Astro.props;
           </div>
         );
       case "core/image":
-        const imgClasses = joinClasses(
-          classes,
-          `${block.attributes?.className || ""}`,
-        );
         return (
           <Image
             src={block.attributes?.url}
             height={block.attributes?.height}
             width={block.attributes?.width}
-            class={imgClasses}
+            class={classNameWordpress}
             style={styles}
             alt={block.attributes?.alt || ""}
+            id={block.attributes?.id}
           />
         );
 
       case "core/button":
         return (
           <Button
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             url={block.attributes?.url}
             content={block.attributes?.content || ""}
@@ -109,7 +110,7 @@ const { postId, blocks } = Astro.props;
               block.name === "core/post-title" ? `post-title-${postId}` : ""
             }
             level={block.attributes?.level || 2}
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             content={block.attributes?.content || ""}
           />
@@ -117,7 +118,7 @@ const { postId, blocks } = Astro.props;
       case "core/cover":
         return (
           <Cover
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             url={block.attributes?.url}
             height={block.attributes?.height}
@@ -127,6 +128,7 @@ const { postId, blocks } = Astro.props;
             customOverlayColor={block.attributes?.customOverlayColor}
             minHeight={block.attributes?.minHeight}
             minHeightUnit={block.attributes?.minHeightUnit}
+            id={block.attributes?.id}
           >
             <BlockRendererInner
               postId={postId}
@@ -137,7 +139,7 @@ const { postId, blocks } = Astro.props;
       case "core/paragraph":
         return (
           <Paragraph
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             content={block.attributes?.content}
           />
@@ -148,7 +150,7 @@ const { postId, blocks } = Astro.props;
       case "core/group":
       case "core/buttons":
         return (
-          <div style={styles} class={classes}>
+          <div style={styles} class={classNameWordpress}>
             <BlockRendererInner
               postId={postId}
               blocks={block.innerBlocks || []}
@@ -157,7 +159,7 @@ const { postId, blocks } = Astro.props;
         );
       case "core/list":
         return (
-          <ul style={styles} class={classes}>
+          <ul style={styles} class={classNameWordpress}>
             <BlockRendererInner
               postId={postId}
               blocks={block.innerBlocks || []}
@@ -167,7 +169,7 @@ const { postId, blocks } = Astro.props;
       case "core/list-item":
         return (
           <ListItem
-            classes={classes}
+            classes={classNameWordpress}
             styles={styles}
             content={block.attributes?.content}
           />

@@ -14,6 +14,7 @@ type Props = {
   customOverlayColor?: string;
   minHeight?: number;
   minHeightUnit?: string;
+  id: string;
 };
 
 const {
@@ -27,6 +28,7 @@ const {
   customOverlayColor,
   minHeight,
   minHeightUnit,
+  id,
 } = Astro.props;
 
 let minHeightValue = "";
@@ -60,6 +62,7 @@ const isHomePage = request.pathname === "/";
         src={url}
         alt=""
         widths={[240, 540, 720, width || 1000]}
+        id={id}
         quality="low"
         loading="eager"
       />
