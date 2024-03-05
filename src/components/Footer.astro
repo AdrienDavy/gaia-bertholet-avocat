@@ -49,6 +49,7 @@ const homeUrl = Astro.url.origin;
       case "core/heading":
         return (
           <Heading
+            transitionName=""
             level={block.attributes?.level || 2}
             classes={classes}
             styles={styles}

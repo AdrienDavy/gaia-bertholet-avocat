@@ -10,7 +10,7 @@ const { styles, classes } = Astro.props;
 // const allClasses = joinClasses(classes, "w-full flex-between max-sm:flex-col");
 ---
 
-<nav class="hidden w-10/12 sm:block py-3">
+<nav class="hidden w-10/12 sm:block">
   <ul class={classes} style={styles}>
     <slot />
   </ul>
@@ -18,7 +18,7 @@ const { styles, classes } = Astro.props;
 
 <!-- ---------------MOBILE SCREEN--------------- -->
 <nav class="block sm:hidden">
-  <MobileMenu client:load>
+  <MobileMenu client:only="react">
     <ul class="flex flex-col justify-center text-center">
       <slot />
     </ul>

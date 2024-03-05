@@ -33,7 +33,7 @@ const homeUrl = Astro.url.origin;
             alt={block.attributes?.alt || ""}
           />
         );
-      case "core/navigation-submenu":
+      case "core/navigation-submenu":    
         return (
           <NavigationSubmenu
             classes={classes}
@@ -41,7 +41,7 @@ const homeUrl = Astro.url.origin;
             label={block.attributes?.label || ""}
             url={block.attributes?.url || ""}
           >
-            {block.innerBlocks?.map((link) => (
+            {block.innerBlocks?.map((link) => (              
               <NavigationSubLink
                 classes={classes}
                 styles={styles}
@@ -52,6 +52,7 @@ const homeUrl = Astro.url.origin;
           </NavigationSubmenu>
         );
       case "core/navigation-link":
+        
         return (
           <NavigationLink
             classes={classes}
@@ -68,7 +69,7 @@ const homeUrl = Astro.url.origin;
         );
       case "core/group":
         const headerClasses = joinClasses(
-          "header !fixed w-full bg-starlight !mt-16 z-50 shadow-lg transition-all",
+          "header !fixed w-full bg-starlight !mt-16 z-[100] shadow-lg transition-all",
           classes,
         );
         const TagName = block.attributes?.tagName || "div";
@@ -90,8 +91,8 @@ const homeUrl = Astro.url.origin;
               title="Vers l'accueil"
             >
               <Image
-                height={block.attributes?.height || 120}
-                width={block.attributes?.width || 120}
+                height={block.attributes?.height || 140}
+                width={block.attributes?.width || 140}
                 src={block.attributes?.url || ""}
                 alt=""
               />

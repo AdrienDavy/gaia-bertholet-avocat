@@ -12,7 +12,7 @@ type Props = {
 const { styles, classes, label, url } = Astro.props;
 const allClasses = joinClasses(
   classes,
-  "group relative sm:flex justify-center text-blue-sky sm:py-3 py-12",
+  "navlink-1 group relative sm:flex justify-center text-blue-sky sm:py-3 py-12",
 );
 const href = replaceUrls(url, Astro.url.host);
 ---
@@ -20,7 +20,7 @@ const href = replaceUrls(url, Astro.url.host);
 <li class={allClasses} style={styles}>
   <a
     href={href}
-    class="block px-6 sm:px-0 py-3 sm:py-0 text-xl font-bold sm:font-normal sm:text-base"
+    class="block px-6 sm:px-0 py-3 sm:py-0 !text-xl font-bold sm:font-normal sm:text-base"
   >
     {label}
     <FontAwesomeIcon
@@ -29,7 +29,7 @@ const href = replaceUrls(url, Astro.url.host);
     />
   </a>
   <ul
-    class="pt-[0.85rem] z-20 hidden sm:group-hover:block sm:bg-starlight sm:absolute sm:top-full text-center whitespace-nowrap py-2 sm:shadow-lg rounded-bl-xl rounded-br-xl"
+    class="-mt-[0.45rem] hidden z-20 sm:group-hover:block sm:bg-starlight sm:absolute sm:top-full text-center whitespace-nowrap py-2 sm:shadow-lg rounded-bl-xl rounded-br-xl"
   >
     <slot />
   </ul>

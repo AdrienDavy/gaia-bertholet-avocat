@@ -77,7 +77,7 @@
 /* -------------------------HEADER-------------------------- */
 /* --------------------------------------------------------- */
 .logo-header {
-  @apply flex flex-col items-center justify-center relative sm:w-[120px] w-auto sm:h-full h-[120px] transition-all;
+  @apply flex flex-col items-center justify-center relative sm:w-[130px]  w-auto sm:h-full h-[130px]  transition-all;
   > a > img {
     @apply transition-all;
   }
@@ -89,6 +89,7 @@
     @apply w-[50px] transition-all;
   }
 }
+
 /* --------------------------------------------------------- */
 /* -------------------------CONTACT-------------------------- */
 /* --------------------------------------------------------- */
