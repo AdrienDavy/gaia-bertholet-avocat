@@ -12,6 +12,7 @@ import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
 import { Image } from "astro:assets";
 import LatestPosts from "./LatestPosts.astro";
+import { joinClasses } from "../utils/joinClasses";
 
 type Props = {
   postId: number;
@@ -76,12 +77,16 @@ const { postId, blocks } = Astro.props;
           </div>
         );
       case "core/image":
+        const imgClasses = joinClasses(
+          classes,
+          `${block.attributes?.className || ""}`,
+        );
         return (
           <Image
             src={block.attributes?.url}
             height={block.attributes?.height}
             width={block.attributes?.width}
-            class={classes}
+            class={imgClasses}
             style={styles}
             alt={block.attributes?.alt || ""}
           />

@@ -67,7 +67,7 @@ const isHomePage = request.pathname === "/";
   }
   {
     !!isHomePage && (
-      <div class="absolute bottom-8 z-50 text-blue-light text-center left-1/2 -translate-x-1/2 flex-col flex">
+      <div class="absolute bottom-8 z-40 text-blue-light text-center left-1/2 -translate-x-1/2 flex-col flex">
         <button type="button" class="">
           ENTRER
         </button>
@@ -76,7 +76,7 @@ const isHomePage = request.pathname === "/";
     )
   }
   <div
-    class="z-40 absolute top-0 right-0 bottom-0 left-0 bg-black !max-w-full !mt-0 rounded-br-[250px] sm:rounded-br-[427px]"
+    class="z-30 absolute top-0 right-0 bottom-0 left-0 bg-black !max-w-full !mt-0 rounded-br-[250px] sm:rounded-br-[427px]"
     style={`opacity:${dimRatio / 100}; ${overlayStyle}`}
   >
   </div>

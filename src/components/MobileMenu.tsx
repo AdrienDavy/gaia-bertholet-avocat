@@ -8,14 +8,17 @@ type Props = {
 export const MobileMenu = ({ children }: Props) => {
   const [toggle, setToggle] = useState(false);
 
+  const variants = {
+    open: { opacity: 1, x: 0, display: "flex" },
+    closed: { opacity: 0, x: 25, transitionEnd: { display: "none" } },
+  };
+
   return (
     <div>
       <div
-        // className={`text-3xl text-blue-light fixed right-5 top-5 cursor-pointer z-50 ${toggle && `hidden`}`}
-        className="space-y-2 fixed right-5 top-5 cursor-pointer z-50  p-1 rounded-md bg-gray-100/20"
+        className="space-y-2 fixed right-5 top-5 cursor-pointer z-10 p-1 rounded-md bg-gray-100/20"
         onClick={() => setToggle((prevToggle) => !prevToggle)}
       >
-        {/* <FontAwesomeIcon icon={faBars} /> */}
         <motion.span
           animate={{ rotateZ: toggle ? 45 : 0, y: toggle ? 12 : 0 }}
           className="block h-1 w-8 bg-blue-sky"
@@ -34,19 +37,19 @@ export const MobileMenu = ({ children }: Props) => {
       </div>
       {!!toggle ? (
         <motion.div
-          animate={{ opacity: 1, x: 0 }}
-          initial={{ opacity: 0, x: 25 }}
-          exit={{ opacity: 0, x: 25 }}
-          className="flex justify-center items-center fixed top-0 right-0 cursor-pointer h-screen overflow-auto w-screen bg-starlight"
+          variants={variants}
+          initial="closed"
+          animate={toggle ? "open" : "closed"}
+          className="flex justify-center items-center fixed top-0 right-0 cursor-pointer h-screen overflow-auto w-screen bg-starlight select-none"
         >
           {children}
         </motion.div>
       ) : (
         <motion.div
-          animate={{ opacity: 0, x: 25 }}
-          initial={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 1, x: 0 }}
-          className="flex justify-center items-center fixed top-0 right-0 cursor-pointer h-screen overflow-auto w-screen bg-starlight"
+          variants={variants}
+          initial="closed"
+          animate={toggle ? "open" : "closed"}
+          className="flex justify-center items-center fixed top-0 right-0 cursor-pointer h-screen overflow-hidden w-screen bg-starlight select-none"
         >
           {children}
         </motion.div>
