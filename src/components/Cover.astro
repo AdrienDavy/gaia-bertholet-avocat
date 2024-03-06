@@ -47,6 +47,7 @@ if (overlayColor) {
 const request = new URL(Astro.request.url);
 // Utilisez `pathname` pour vérifier si c'est la page d'accueil
 const isHomePage = request.pathname === "/";
+const isPostPage = request.pathname === "/actualites/";
 ---
 
 <div
@@ -97,4 +98,9 @@ const isHomePage = request.pathname === "/";
     class="-z-10 w-full h-full absolute bg-blue-light -right-16 sm:-right-24 bottom-0 rounded-br-[250px] sm:rounded-br-[427px]"
   >
   </div>
+  {
+    !!isPostPage && (
+      <div class="-z-20 right-0 w-full h-full absolute bg-grey-light bottom-0" />
+    )
+  }
 </div>

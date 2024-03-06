@@ -49,7 +49,7 @@ const articleUrl = (uri: string) => `${Astro.url.origin}${uri}`;
 ---
 
 <div
-  class={`${postLayout} sm:flex justify-${featuredImageAlign} text-${textColor} mx-auto sm:w-8/12 justify-between pb-40`}
+  class={`${postLayout} max-w-fit sm:flex gap-9 justify-${featuredImageAlign} text-${textColor} mx-auto sm:w-8/12 justify-between pb-10`}
 >
   {
     posts.slice(0, postsToShow).map((post: any) => (

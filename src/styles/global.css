@@ -93,22 +93,17 @@
 /* --------------------------------------------------------- */
 /* -------------------------HOME-------------------------- */
 /* --------------------------------------------------------- */
-.home-section-cabinet {
-  div {
-    div:first-of-type {
-      @apply sm:rounded-br-3xl xl:p-12 sm:!pl-10 sm:!pr-20 md:!pl-20 !pl-4 !pr-4;
-      div h2 {
-        @apply text-center sm:text-left;
-      }
-    }
-    .image-home-1 {
-      @apply sm:-ml-16 xl:max-w-screen-sm  w-8/12 sm:w-full mx-auto my-4;
-    }
-  }
+
+.home-section-cabinet > div > div:first-of-type {
+  @apply sm:rounded-br-3xl xl:p-12 sm:!pl-10 sm:!pr-20 md:!pl-20 !pl-4 !pr-4 xl:!py-32;
+}
+
+.home-section-cabinet > div > div:nth-of-type(2) > img {
+  @apply sm:-ml-16 xl:max-w-screen-sm w-8/12 sm:w-full mx-auto my-4 relative z-10 shadow-xl;
 }
 
 .home-section-competences > div {
-  @apply rounded-lg relative;
+  @apply rounded-xl relative;
 }
 
 .home-section-competences > div:nth-of-type(2)::before {
@@ -152,6 +147,33 @@
 }
 .home-section-competences > div p {
   @apply bg-transparent z-20 relative;
+}
+
+.home-section-honoraires > div {
+  @apply !pt-0 sm:!pt-20;
+}
+.home-section-honoraires > div > div:first-of-type > img {
+  @apply sm:-mr-16 xl:max-w-screen-sm w-8/12 sm:w-full mx-auto my-4 relative z-10 shadow-xl;
+}
+
+.home-section-honoraires > div > div:nth-of-type(2) {
+  @apply sm:rounded-l-3xl xl:p-12 sm:!pr-10 sm:!pl-20 md:!pr-20 !pr-4 !pl-4 z-0 relative xl:!py-32;
+}
+
+.home-reassurances {
+  @apply sm:-mb-28 relative z-10;
+}
+
+.home-reassurances > div:first-child > div {
+  @apply sm:rounded-xl shadow-xl;
+}
+
+.home-reassurances div > div img {
+  @apply h-20 object-contain z-20 relative;
+}
+
+.home-section-actualites {
+  @apply !pt-5 sm:!pt-40;
 }
 
 /* --------------------------------------------------------- */
@@ -201,18 +223,14 @@ input[name="your-file"] {
 /* --------------------------------------------------------- */
 /* -------------------------FOOTER-------------------------- */
 /* --------------------------------------------------------- */
-.footer-logo {
-  @apply md:!w-52 md:mt-24 md:min-w-16 !w-32 mt-12;
-}
 
-/* Cible la première div à l'intérieur de footer */
 footer div:nth-of-type(1) {
   @apply flex-col items-center;
   > div:nth-of-type(1) {
     @apply flex sm:flex-wrap md:items-stretch sm:flex-row justify-center;
   }
 }
-/* Cible tous les enfants div direct de la première div dans footer */
+
 footer div:nth-of-type(1) > div:nth-of-type(1) > .column-footer {
   @apply flex-grow flex-shrink-0 sm:basis-[300px] !py-2 sm:!py-5 flex justify-center;
   .group-footer {
