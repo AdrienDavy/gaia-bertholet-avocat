@@ -48,6 +48,7 @@ const request = new URL(Astro.request.url);
 // Utilisez `pathname` pour vérifier si c'est la page d'accueil
 const isHomePage = request.pathname === "/";
 const isPostPage = request.pathname === "/actualites/";
+const isCabinetPage = request.pathname === "/le-cabinet/";
 ---
 
 <div
@@ -146,6 +147,11 @@ const isPostPage = request.pathname === "/actualites/";
   {
     !!isPostPage && (
       <div class="-z-20 right-0 w-full h-full absolute bg-grey-light bottom-0" />
+    )
+  }
+  {
+    !!isCabinetPage && (
+      <div class="-z-20 right-0 w-full h-full absolute bg-blue-sky bottom-0" />
     )
   }
 </div>

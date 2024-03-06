@@ -27,7 +27,7 @@
   }
 
   h2 {
-    font-size: clamp(1rem, 4.5vw, 2.25rem) !important;
+    font-size: clamp(1rem, 4.5vw, 2.25rem);
   }
 
   h3 {
@@ -108,11 +108,13 @@
   @apply sm:-ml-16 xl:max-w-screen-sm w-8/12 sm:w-full mx-auto my-4 relative z-10 shadow-xl;
 }
 
-.home-section-competences > div {
+.home-section-competences > div,
+.cabinet-section-competences div {
   @apply rounded-xl relative;
 }
 
-.home-section-competences > div:nth-of-type(2)::before {
+.home-section-competences > div:nth-of-type(2)::before,
+.cabinet-section-competences div:nth-of-type(2)::before {
   content: "";
   position: absolute;
   top: 0;
@@ -123,35 +125,40 @@
   background-image: linear-gradient(
     to bottom,
     rgba(1, 116, 207, 0.8),
-    rgba(1, 116, 207, 0.4)
+    rgba(1, 116, 207, 0.6)
   );
   z-index: 10;
 }
 
-.home-section-competences > div:nth-of-type(2) {
+.home-section-competences > div:nth-of-type(2),
+.cabinet-section-competences div:nth-of-type(2) {
   background: url("/immobilier.jpg");
   background-size: cover;
   position: relative;
 }
 
-.home-section-competences > div {
+.home-section-competences > div,
+.cabinet-section-competences div {
   @apply my-5;
   > div {
     @apply h-fit;
   }
 }
 
-.home-section-competences > div > div img {
+.home-section-competences > div > div img,
+.cabinet-section-competences div > div img {
   @apply h-20 object-contain z-20 relative;
 }
 
-.home-section-competences > div h4 {
+.home-section-competences > div h4,
+.cabinet-section-competences div h4 {
   padding-top: 0.5rem; /* pb-4 */
   background: transparent !important;
   z-index: 20;
   position: relative;
 }
-.home-section-competences > div p {
+.home-section-competences > div p,
+.cabinet-section-competences div p {
   @apply bg-transparent z-20 relative;
 }
 
@@ -180,6 +187,28 @@
 
 .home-section-actualites {
   @apply !pt-5 sm:!pt-40;
+}
+
+/* --------------------------------------------------------- */
+/* -------------------------CABINET-------------------------- */
+/* --------------------------------------------------------- */
+
+.cabinet-presentation {
+  @apply !px-0 !pt-0 sm:!pt-2;
+}
+.cabinet-presentation div div:first-of-type {
+  @apply sm:rounded-br-3xl md:!pl-20 !pl-4 !pr-4;
+}
+
+.cabinet-presentation > div > div:nth-of-type(2) img {
+  @apply w-full my-4 relative !rounded-xl z-10 !shadow-xl;
+}
+
+.cabinet-section-competences {
+  @apply !-mt-52 mx-4 sm:mx-auto;
+}
+.cabinet-section-competences > div:first-of-type > div {
+  @apply shadow-xl;
 }
 
 /* --------------------------------------------------------- */
