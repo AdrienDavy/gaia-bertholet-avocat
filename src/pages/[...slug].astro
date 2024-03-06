@@ -38,18 +38,18 @@ export async function getStaticPaths() {
     return [...data.pages.nodes, ...data.posts.nodes]
       .filter((page: any) => {
         let found = false;
-        const hasArticleSearch = (blocks: Block[]) => {
+        const hasActualites = (blocks: Block[]) => {
           for (let block of blocks) {
             if (block.name === "astro/article-search") {
               found = true;
               break;
             }
             if (block.innerBlocks) {
-              hasArticleSearch(block.innerBlocks);
+              hasActualites(block.innerBlocks);
             }
           }
         };
-        hasArticleSearch(page.blocks);
+        hasActualites(page.blocks);
         return !found;
       })
       .map((page: any) => ({

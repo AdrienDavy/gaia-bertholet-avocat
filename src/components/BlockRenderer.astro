@@ -6,7 +6,7 @@ import Heading from "./Heading.astro";
 import Paragraph from "./Paragraph.astro";
 import Cover from "./Cover.astro";
 import ListItem from "./ListItem.astro";
-import ArticleSearch from "./ArticleSearch.astro";
+import Actualites from "./Actualites.astro";
 import VideoEmbed from "./VideoEmbed.astro";
 import { getBlockStyling } from "@wp-block-tools/styles";
 import type { Block } from "@wp-block-tools/styles";
@@ -44,17 +44,8 @@ const { postId, blocks } = Astro.props;
           <div style={styles} class={classNameWordpress}>
             <LatestPosts
               postsToShow={block.attributes?.postsToShow || 2}
-              displayPostContent={block.attributes?.displayPostContent || true}
-              excerptLength={block.attributes?.excerptLength || 30}
-              displayPostDate={block.attributes?.displayPostDate || true}
               postLayout={block.attributes?.postLayout || ""}
-              displayFeaturedImage={
-                block.attributes?.displayFeaturedImage || ""
-              }
               featuredImageAlign={block.attributes?.featuredImageAlign || ""}
-              featuredImageSizeSlug={
-                block.attributes?.featuredImageSizeSlug || ""
-              }
               textColor={block.attributes?.textColor || ""}
             />
           </div>
@@ -69,7 +60,7 @@ const { postId, blocks } = Astro.props;
           />
         );
       case "astro/article-search":
-        return <ArticleSearch />;
+        return <Actualites />;
       case "core/gallery":
         return (
           <div style={styles} class={classNameWordpress}>

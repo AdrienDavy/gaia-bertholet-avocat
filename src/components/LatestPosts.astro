@@ -4,52 +4,20 @@ import { formatDate } from "../utils/formatDate";
 import { Image } from "astro:assets";
 const response = await fetch(`${Astro.url.origin}/api/articles.json`);
 const { posts } = await response.json();
+
 interface Props {
   postsToShow?: number;
-  displayPostContent?: boolean;
-  excerptLength?: number;
-  displayPostDate?: boolean;
-  postLayout?: "grid" | "list"; // Exemple de typage pour postLayout
-  displayFeaturedImage?: boolean;
-  featuredImageAlign?: string; // 'center', 'left', 'right', etc.
-  featuredImageSizeSlug?: string; // 'large', 'medium', etc.
+  postLayout?: "grid" | "list";
+  featuredImageAlign?: string;
   addLinkToFeaturedImage?: boolean;
-  align?: string; // 'wide', 'full', etc.
-  // Vous pouvez également inclure des styles si nécessaire
   textColor?: string;
 }
 
-const {
-  postsToShow,
-  displayPostContent,
-  excerptLength,
-  displayPostDate,
-  postLayout,
-  displayFeaturedImage,
-  featuredImageAlign,
-  featuredImageSizeSlug,
-  textColor,
-} = Astro.props;
-const imageSize = (imageSize: string) => {
-  switch (imageSize) {
-    case "large":
-      let imageLargeClass = "w-[1024px] h-[1024px]";
-      return imageLargeClass;
-    case "medium":
-      let imageMediumClass = "w-[300px] h-[300px]";
-      return imageMediumClass;
-    case "":
-      let imageSmallClass = "w-[150px] h-[150px]";
-      return imageSmallClass;
-    default:
-      null;
-  }
-};
-const articleUrl = (uri: string) => `${Astro.url.origin}${uri}`;
+const { postsToShow, postLayout, featuredImageAlign, textColor } = Astro.props;
 ---
 
 <div
-  class={`${postLayout} max-w-fit sm:flex gap-9 justify-${featuredImageAlign} text-${textColor} mx-auto sm:w-8/12 justify-between pb-10`}
+  class={`${postLayout} max-w-fit sm:flex gap-9 justify-${featuredImageAlign} text-${textColor} mx-auto justify-between pb-10`}
 >
   {
     posts.slice(0, postsToShow).map((post: any) => (
