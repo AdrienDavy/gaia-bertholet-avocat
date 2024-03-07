@@ -212,6 +212,93 @@
 }
 
 /* --------------------------------------------------------- */
+/* ----------------------COMPETENCES------------------------ */
+/* --------------------------------------------------------- */
+
+.competences-section-famille,
+.competences-section-civil {
+  @apply sm:!pb-14 !pt-2;
+}
+
+.competences-section-famille div:nth-of-type(3) > div,
+.competences-section-civil div:nth-of-type(3) > div {
+  @apply flex flex-col-reverse sm:flex-row gap-0 sm:gap-8;
+}
+
+.competences-section-famille div:nth-of-type(3) > div > div:nth-of-type(2),
+.competences-section-civil div:nth-of-type(3) > div > div:nth-of-type(2) {
+  @apply overflow-hidden sm:rounded-xl lg:-ml-16 sm:mr-8 lg:mr-40 relative w-full pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl;
+}
+.competences-section-famille
+  div:nth-of-type(3)
+  > div
+  > div:nth-of-type(2)::before,
+.competences-section-civil
+  div:nth-of-type(3)
+  > div
+  > div:nth-of-type(2)::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl z-10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+}
+
+.competences-section-famille
+  div:nth-of-type(3)
+  > div
+  > div:nth-of-type(2)
+  > img,
+.competences-section-civil div:nth-of-type(3) > div > div:nth-of-type(2) > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+.competences-section-famille div:nth-of-type(3) > div > div:first-of-type,
+.competences-section-civil div:nth-of-type(3) > div > div:first-of-type {
+  @apply sm:rounded-r-3xl xl:p-12 sm:!pl-10 sm:!pr-20 lg:!pl-36 !pl-4 !pr-4 z-0 relative xl:!py-16;
+}
+
+.competences-section-immobilier {
+  @apply !pt-8 sm:!pb-16;
+}
+
+.competences-section-immobilier div:nth-of-type(3) > div {
+  @apply gap-0 sm:gap-8;
+}
+
+.competences-section-immobilier div:nth-of-type(3) > div > div:nth-of-type(2) {
+  @apply sm:rounded-l-3xl xl:p-12 sm:!pr-10 sm:!pl-20 md:!pr-36 !pr-4 !pl-4 z-0 relative xl:!py-16;
+}
+
+.competences-section-immobilier div:nth-of-type(3) > div > div:first-of-type {
+  @apply overflow-hidden sm:rounded-xl lg:-mr-16 sm:ml-8 lg:ml-40 relative w-full pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl z-10;
+}
+
+.competences-section-immobilier
+  div:nth-of-type(3)
+  > div
+  > div:first-of-type::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+  z-index: 1;
+}
+
+.competences-section-immobilier
+  div:nth-of-type(3)
+  > div
+  > div:first-of-type
+  > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+/* --------------------------------------------------------- */
 /* -------------------------CONTACT-------------------------- */
 /* --------------------------------------------------------- */
 
