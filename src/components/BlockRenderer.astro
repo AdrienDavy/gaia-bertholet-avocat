@@ -95,15 +95,21 @@ const { postId, blocks } = Astro.props;
         );
       case "core/post-title":
       case "core/heading":
+        const headingContent = block.attributes?.content || "";
+        const id = headingContent
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, "");
         return (
           <Heading
+            id={id}
             transitionName={
               block.name === "core/post-title" ? `post-title-${postId}` : ""
             }
             level={block.attributes?.level || 2}
             classes={classNameWordpress}
             styles={styles}
-            content={block.attributes?.content || ""}
+            content={headingContent}
           />
         );
       case "core/cover":
@@ -165,7 +171,6 @@ const { postId, blocks } = Astro.props;
             content={block.attributes?.content}
           />
         );
-
       default:
         return null;
     }
