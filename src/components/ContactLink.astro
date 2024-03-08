@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const contactLink = `${Astro.url.origin}/contact`;
 ---
 
-<aside class="fixed right-0 top-[7.3rem] flex w-fit z-50">
+<aside class="fixed right-0 top-[7.3rem] w-fit z-50 hidden sm:flex">
   <div class="mt-3 smartphone bg-blue-sky h-fit w-fit pt-[0.5rem] rounded-l-md">
     <div class="flex flex-col justify-center items-center">
       <!-- <svg
@@ -36,7 +36,7 @@ const contactLink = `${Astro.url.origin}/contact`;
               ></path></g
             ></svg
           > -->
-      <p class="text-starlight pb-2 pr-2 pl-2">Contact</p>
+      <p class="text-blue-light pb-2 pr-2 pl-2">Contact</p>
     </div>
   </div>
   <div class="grid justify-center items-center">
@@ -48,18 +48,18 @@ const contactLink = `${Astro.url.origin}/contact`;
     <div
       class="bg-blue-sky p-5 gap-2 grid justify-center items-center rounded-bl-xl"
     >
-      <div class="text-starlight flex flex-col justify-center">
+      <div class="text-blue-light flex flex-col justify-center">
         <FontAwesomeIcon icon={faPhone} />
         <div
-          class="text-starlight grid justify-center pt-2 hover:text-blue-200 transition-all duration-300 ease"
+          class="text-blue-light grid justify-center pt-2 hover:text-starlight transition-all duration-300 ease"
         >
           <a href="tel:07 69 88 03 90">07 69 88 03 90</a>
         </div>
       </div>
-      <div class="text-starlight flex flex-col justify-center">
+      <div class="text-blue-light flex flex-col justify-center">
         <FontAwesomeIcon icon={faMailBulk} />
         <div
-          class="text-starlight grid justify-center pt-2 hover:text-blue-200 transition-all duration-300 ease"
+          class="text-blue-light grid justify-center pt-2 hover:text-starlight transition-all duration-300 ease"
         >
           <a href="mailto:gaia.bertholet.avocat@gmail.com">
             gaia.bertholet.avocat@gmail.com

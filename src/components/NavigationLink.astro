@@ -9,9 +9,11 @@ type Props = {
 };
 const { styles, classes, label, url } = Astro.props;
 const href = replaceUrls(url, Astro.url.host);
+
+const isHidden = label === "Contact" ? "sm:hidden" : "";
 const linkClasses = joinClasses(
   classes,
-  "navlink block px-6 sm:px-0 sm:py-3 py-12 sm:py-0 text-blue-sky",
+  `${isHidden} navlink block px-6 sm:px-0 sm:py-3 py-12 sm:py-0 text-blue-sky`,
 );
 ---
 
