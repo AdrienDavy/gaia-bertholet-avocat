@@ -76,7 +76,7 @@ const homeUrl = Astro.url.origin;
         );
       case "core/group":
         const headerClasses = joinClasses(
-          `${block.attributes?.className || ""} header !fixed w-full bg-starlight !mt-16 shadow-lg transition-all`,
+          `${block.attributes?.className || ""} header !fixed w-full bg-starlight !mt-16 shadow-lg transition-all duration-300 ease-in-out`,
           classes,
         );
         const TagName = block.attributes?.tagName || "div";

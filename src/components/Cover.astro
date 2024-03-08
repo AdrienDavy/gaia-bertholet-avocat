@@ -49,6 +49,7 @@ const request = new URL(Astro.request.url);
 const isHomePage = request.pathname === "/";
 const isPostPage = request.pathname === "/actualites/";
 const isCabinetPage = request.pathname === "/le-cabinet/";
+const isContactPage = request.pathname === "/contact";
 ---
 
 <div
@@ -146,6 +147,11 @@ const isCabinetPage = request.pathname === "/le-cabinet/";
   </div>
   {
     !!isPostPage && (
+      <div class="-z-20 right-0 w-full h-full absolute bg-grey-light bottom-0" />
+    )
+  }
+  {
+    !!isContactPage && (
       <div class="-z-20 right-0 w-full h-full absolute bg-grey-light bottom-0" />
     )
   }

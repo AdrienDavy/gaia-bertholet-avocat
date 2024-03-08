@@ -301,6 +301,13 @@
 /* --------------------------------------------------------- */
 /* -------------------------CONTACT-------------------------- */
 /* --------------------------------------------------------- */
+aside {
+  transform: translateX(80%);
+  transition: all 300ms ease-in-out;
+  &:hover {
+    transform: translateX(0%);
+  }
+}
 
 .wpcf7 {
   @apply flex justify-center bg-starlight shadow-lg p-5 rounded-xl sm:w-3/4 mx-auto;

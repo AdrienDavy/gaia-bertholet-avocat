@@ -1,6 +1,7 @@
 ---
 import BlockRenderer from "../components/BlockRenderer.astro";
 import CommonHead from "../components/CommonHead.astro";
+import ContactLink from "../components/ContactLink.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 export const prerender = false;
@@ -21,6 +22,7 @@ const { seo, blocks, language, databaseId } = data;
   <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
   <body>
     <Header blocks={blocks} />
+    <ContactLink />
     <BlockRenderer postId={databaseId} blocks={blocks} />
     <Footer blocks={blocks} />
   </body>
