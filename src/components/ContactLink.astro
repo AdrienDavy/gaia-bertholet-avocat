@@ -39,11 +39,16 @@ const contactLink = `${Astro.url.origin}/contact`;
       <p class="text-blue-light pb-2 pr-2 pl-2">Contact</p>
     </div>
   </div>
-  <div class="grid justify-center items-center">
+  <div class="grid justify-center items-center shadow-xl rounded-bl-xl">
     <div
       class="bg-starlight text-blue-sky flex justify-center items-center w-full p-5 relative"
     >
-      <a href={contactLink}>Contact</a>
+      <button class="group learn-more" title="Vers la page contact">
+        <span class="circle bg-blue-sky" aria-hidden="true">
+          <span class="arrow"></span>
+        </span>
+        <a class="button-text text-blue-sky" href={contactLink}>Contact</a>
+      </button>
     </div>
     <div
       class="bg-blue-sky p-5 gap-2 grid justify-center items-center rounded-bl-xl"
@@ -68,8 +73,17 @@ const contactLink = `${Astro.url.origin}/contact`;
       </div>
       <div class="text-starlight flex flex-col justify-center">
         <FontAwesomeIcon icon={faMapLocation} />
-        <div class="text-starlight grid justify-center pt-2">
-          <p>24 Cr Pierre Puget, 13006 Marseille</p>
+        <div
+          class="text-blue-light grid justify-center pt-2 hover:text-starlight transition-all duration-300 ease"
+        >
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=24+Cr+Pierre+Puget,+13006+Marseille"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Ouvrir la carte sur Google Maps"
+          >
+            24 Cr Pierre Puget, 13006 Marseille
+          </a>
         </div>
       </div>
     </div>

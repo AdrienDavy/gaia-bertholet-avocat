@@ -2,6 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+  button.learn-more {
+    width: 12rem;
+    height: auto;
+  }
+
+  button.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: block;
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    /* background: #282936; */
+    border-radius: 1.625rem;
+  }
+
+  button.learn-more .circle .arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    /* background: #fff; */
+  }
+
+  button.learn-more .circle .arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: 0.625rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    /* background: none; */
+  }
+
+  button.learn-more .circle .arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.25rem;
+    right: 0.0625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #fff;
+    border-right: 0.125rem solid #fff;
+    transform: rotate(45deg);
+  }
+
+  button.learn-more .button-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.75rem 0;
+    margin: 0 0 0 1.85rem;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  button:hover .circle {
+    width: 100%;
+  }
+
+  button:hover .circle .arrow {
+    background: #fff;
+    transform: translate(1rem, 0);
+  }
+
+  button:hover .button-text {
+    color: #fff;
+  }
+}
+
 @layer base {
   body {
     font-family: "Montserrat Variable", sans-serif;
@@ -108,20 +197,25 @@
   @apply sm:-ml-16 xl:max-w-screen-sm w-8/12 sm:w-full mx-auto my-4 relative z-10 shadow-xl;
 }
 
-.home-section-competences > div,
-.cabinet-section-competences div {
+.honoraires-section-competences {
+  @apply -mt-40;
+}
+.home-section-competences > a div,
+.cabinet-section-competences a div,
+.honoraires-section-competences a div {
   @apply rounded-xl relative;
 }
 
-.home-section-competences > div:nth-of-type(2)::before,
-.cabinet-section-competences div:nth-of-type(2)::before {
+.home-section-competences > a:nth-of-type(2)::before,
+.cabinet-section-competences a:nth-of-type(2)::before,
+.honoraires-section-competences a:nth-of-type(2)::before {
+  @apply rounded-xl;
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 0.5rem;
   background-image: linear-gradient(
     to bottom,
     rgba(1, 116, 207, 0.8),
@@ -130,35 +224,49 @@
   z-index: 10;
 }
 
-.home-section-competences > div:nth-of-type(2),
-.cabinet-section-competences div:nth-of-type(2) {
+.home-section-competences a:nth-of-type(2) div,
+.cabinet-section-competences a:nth-of-type(2) div,
+.honoraires-section-competences a:nth-of-type(2) div {
+  background-color: transparent !important;
+}
+
+.home-section-competences a:nth-of-type(2),
+.cabinet-section-competences a:nth-of-type(2),
+.honoraires-section-competences a:nth-of-type(2) {
   background: url("/immobilier.jpg");
   background-size: cover;
   position: relative;
+  background-position: center;
+  display: block;
 }
 
-.home-section-competences > div,
-.cabinet-section-competences div {
-  @apply my-5;
-  > div {
+.home-section-competences > a,
+.cabinet-section-competences a,
+.honoraires-section-competences a {
+  @apply my-5 rounded-xl transition-all duration-300 ease-in-out shadow-xl hover:shadow-2xl hover:scale-[0.99];
+  > div div {
     @apply h-fit;
   }
 }
 
-.home-section-competences > div > div img,
-.cabinet-section-competences div > div img {
+.home-section-competences > a > div img,
+.cabinet-section-competences a > div img,
+.honoraires-section-competences a > div img {
   @apply h-20 object-contain z-20 relative;
 }
 
-.home-section-competences > div h4,
-.cabinet-section-competences div h4 {
-  padding-top: 0.5rem; /* pb-4 */
+.home-section-competences > a h4,
+.cabinet-section-competences a h4,
+.honoraires-section-competences a h4 {
+  padding-top: 0.5rem;
   background: transparent !important;
   z-index: 20;
   position: relative;
 }
-.home-section-competences > div p,
-.cabinet-section-competences div p {
+
+.home-section-competences > a p,
+.cabinet-section-competences a p,
+.honoraires-section-competences a p {
   @apply bg-transparent z-20 relative;
 }
 
@@ -295,6 +403,61 @@
   > div
   > div:first-of-type
   > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+/* --------------------------------------------------------- */
+/* -----------------------HONORAIRES------------------------ */
+/* --------------------------------------------------------- */
+
+.honoraires-section-fixation {
+  @apply flex flex-col-reverse sm:flex-row gap-0 sm:gap-8;
+}
+.honoraires-section-fixation div:first-of-type {
+  @apply sm:rounded-r-3xl xl:p-12 !pl-4 sm:!pl-10 !pr-4 sm:!pr-20 lg:!pl-28 z-0 relative xl:!py-16;
+}
+.honoraires-section-fixation div:nth-of-type(2) {
+  @apply overflow-hidden sm:rounded-xl lg:-ml-16 sm:mr-8 lg:mr-28 relative w-full h-1/2 my-auto pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl;
+}
+
+.honoraires-section-fixation div:nth-of-type(2)::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl z-10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+}
+
+.honoraires-section-fixation div:nth-of-type(2) > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+.honoraires-section-convention {
+  @apply gap-0 sm:gap-8;
+}
+.honoraires-section-convention div:nth-of-type(2) {
+  @apply sm:rounded-l-3xl xl:p-12 !pr-4 sm:!pr-10 !pl-4 sm:!pl-20 lg:!pr-28 relative xl:!py-8;
+}
+.honoraires-section-convention div:nth-of-type(2) div {
+  @apply !py-4;
+}
+.honoraires-section-convention div:first-of-type {
+  @apply z-10 overflow-hidden sm:rounded-xl lg:-mr-16 sm:ml-8 lg:ml-28 relative w-full h-1/2 my-auto pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl;
+}
+
+.honoraires-section-convention > div:first-of-type::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl z-10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+}
+
+.honoraires-section-convention div:first-of-type > img {
   @apply absolute top-0 left-0 w-full h-full object-cover;
 }
 

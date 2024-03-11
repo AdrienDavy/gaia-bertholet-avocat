@@ -1,17 +1,26 @@
 ---
+import {
+  faArrowRight,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { joinClasses } from "../utils/joinClasses";
 import { replaceUrls } from "../utils/replaceUrls";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Props = {
   styles: string;
+  backgroundColor: string;
+  textColor: string;
   classes: string;
   url?: string;
   content: string;
 };
-const { classes, styles, url, content } = Astro.props;
+const { classes, styles, backgroundColor, textColor, url, content } =
+  Astro.props;
+
 const href = replaceUrls(url || "#", Astro.url.host);
 ---
 
-<button
+<!-- <button
   type="button"
   class={joinClasses(
     "inline-block uppercase font-bold tracking-[1.3px] bg-blue-light rounded-full py-3 px-6",
@@ -20,4 +29,14 @@ const href = replaceUrls(url || "#", Astro.url.host);
   style={styles}
 >
   <a href={href} set:html={content} />
+</button> -->
+<button class="group learn-more">
+  <span class=`circle bg-${backgroundColor}` aria-hidden="true">
+    <span class="arrow"></span>
+  </span>
+  <a
+    class=`button-text text-${backgroundColor}`
+    href={href}
+    set:html={content}
+  />
 </button>
