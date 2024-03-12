@@ -1,0 +1,194 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+import { getBlockStyling, type Block } from "@wp-block-tools/styles";
+import Paragraph from "./Paragraph.astro";
+import Heading from "./Heading.astro";
+import CodeBlock from "./CodeBlock.astro";
+import FooterInner from "./Footer.astro";
+import ListItem from "./ListItem.astro";
+import SocialLink from "./SocialLink.astro";
+import { Image } from "astro:assets";
+import Button from "./Button.astro";
+
+type Props = {
+  blocks: Block[];
+};
+
+const { blocks } = Astro.props;
+const homeUrl = Astro.url.origin;
+const privacyPolicyPage = `${Astro.url.origin}/privacy-policy/`;
+---
+
+{
+  blocks.map((block) => {
+    const { styles, classes } = getBlockStyling(block);
+    const classNameWordpress = joinClasses(
+      classes,
+      block.attributes?.className || "",
+    );
+
+    switch (block.name) {
+      case "core/image":
+        return (
+          <Image
+            src={block.attributes?.url}
+            height={block.attributes?.height}
+            width={block.attributes?.width}
+            class={classNameWordpress}
+            style={styles}
+            alt={block.attributes?.alt || ""}
+          />
+        );
+      case "core/button":
+        return (
+          <Button
+            classes={classNameWordpress}
+            styles={styles}
+            backgroundColor={block.attributes?.backgroundColor || ""}
+            textColor={block.attributes?.textColor || ""}
+            url={block.attributes?.url}
+            content={block.attributes?.content || ""}
+          />
+        );
+      case "core/post-title":
+      case "core/heading":
+        return (
+          <Heading
+            transitionName=""
+            level={block.attributes?.level || 2}
+            classes={classNameWordpress}
+            styles={styles}
+            content={block.attributes?.content || ""}
+          />
+        );
+
+      case "core/paragraph":
+        return (
+          <Paragraph
+            classes={classNameWordpress}
+            styles={styles}
+            content={block.attributes?.content}
+          />
+        );
+      case "core/code":
+        // Exemple de logique pour un bloc de code sans attributs spécifiques
+        return <CodeBlock classes={classes} styles={styles} />;
+
+      case "core/columns":
+      case "core/column":
+        const columnClasses = joinClasses(
+          `${block.attributes?.className || ""} column-footer`,
+          classes,
+        );
+        return (
+          <div style={styles} class={columnClasses}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/group":
+        const groupClasses = joinClasses(
+          `${block.attributes?.className || ""} group-footer`,
+          classes,
+        );
+        return (
+          <div style={styles} class={groupClasses}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/buttons":
+        return <FooterInner blocks={block.innerBlocks || []} />;
+      case "core/list":
+        return (
+          <ul style={styles} class={classNameWordpress}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </ul>
+        );
+      case "core/list-item":
+        return (
+          <ListItem
+            classes={classNameWordpress}
+            styles={styles}
+            content={block.attributes?.content}
+          />
+        );
+
+      case "core/social-links":
+        return (
+          <div class={classNameWordpress} style={styles}>
+            <FooterInner blocks={block.innerBlocks || []} />
+          </div>
+        );
+      case "core/social-link":
+        return (
+          <SocialLink
+            url={block.attributes?.url}
+            service={block.attributes?.service}
+            classes={classNameWordpress}
+            styles={styles}
+          />
+        );
+      case "core/site-logo":
+        return (
+          <div style={styles} class={classNameWordpress}>
+            <a href={homeUrl} title="Vers l'accueil">
+              <Image
+                height={block.attributes?.height || 180}
+                width={block.attributes?.width || 180}
+                src={block.attributes?.url || ""}
+                alt=""
+              />
+            </a>
+          </div>
+        );
+      case "core/template-part":
+        if (block.attributes?.slug === "common-footer") {
+          return (
+            <footer class="relative rounded-tl-[250px] sm:rounded-tl-[427px]">
+              <FooterInner blocks={block.innerBlocks || []} />
+              <div class=" z-20 w-full h-fit flex-wrap flex justify-evenly pb-2 bg-blue-sky flex-grow-0 basis-1">
+                <a
+                  href={privacyPolicyPage}
+                  class="text-xs text-blue-light hover:text-starlight transition-all duration-300 ease-in-out"
+                >
+                  Mentions légales
+                </a>
+                <a
+                  href={privacyPolicyPage}
+                  class="text-xs text-blue-light hover:text-starlight transition-all duration-300 ease-in-out"
+                >
+                  Conditions générales d’utilisations
+                </a>
+                <a
+                  href={privacyPolicyPage}
+                  class="text-xs text-blue-light hover:text-starlight transition-all duration-300 ease-in-out"
+                >
+                  Politique de confidentialité
+                </a>
+                <p class="text-xs text-blue-light">
+                  Site réalisé par
+                  <a
+                    href="https://adrien-davy.fr/"
+                    title="Vers le site d'Adrien Davy"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-xs text-blue-light hover:text-starlight transition-all duration-300 ease-in-out"
+                  >
+                    Adrien Davy
+                  </a>
+                </p>
+              </div>
+              <div class="flex justify-center items-center w-full justify-self-center bg-blue-sky text-blue-light pb-2">
+                <p class="text-xs">
+                  ©2024 Gaïa Bertholet Avocat - Tous droits réservés
+                </p>
+              </div>
+              <div class=" -z-10 w-full h-full absolute bg-blue-med right-3 sm:right-12 bottom-0 rounded-tl-[250px] sm:rounded-tl-[427px]" />
+              <div class=" -z-20 w-full h-full absolute bg-blue-light right-12 sm:right-24 bottom-0 rounded-tl-[250px] sm:rounded-tl-[427px]" />
+            </footer>
+          );
+        }
+      default:
+        return null;
+    }
+  })
+}

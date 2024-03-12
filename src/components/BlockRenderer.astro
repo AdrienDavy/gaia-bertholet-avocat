@@ -1,0 +1,233 @@
+---
+import ContactForm7 from "./ContactForm7.tsx";
+import BlockRendererInner from "./BlockRenderer.astro";
+import Button from "./Button.astro";
+import Heading from "./Heading.astro";
+import Paragraph from "./Paragraph.astro";
+import Cover from "./Cover.astro";
+import ListItem from "./ListItem.astro";
+import Actualites from "./Actualites.astro";
+import VideoEmbed from "./VideoEmbed.astro";
+import { getBlockStyling } from "@wp-block-tools/styles";
+import type { Block } from "@wp-block-tools/styles";
+import { Image } from "astro:assets";
+import LatestPosts from "./LatestPosts.astro";
+import { joinClasses } from "../utils/joinClasses";
+
+type Props = {
+  postId: number;
+  blocks: Block[];
+};
+
+const { postId, blocks } = Astro.props;
+const competencesPage = `${Astro.url.origin}/competences/`;
+---
+
+{
+  blocks.map((block) => {
+    const { styles, classes } = getBlockStyling(block);
+    const classNameWordpress = joinClasses(
+      classes,
+      block.attributes?.className || "",
+    );
+
+    switch (block.name) {
+      case "contact-form-7/contact-form-selector":
+        return (
+          <ContactForm7
+            client:only="react"
+            formId={block.attributes?.id}
+            formMarkup={block.attributes?.formMarkup}
+          />
+        );
+      case "core/latest-posts":
+        return (
+          <div style={styles} class={classNameWordpress}>
+            <LatestPosts
+              postsToShow={block.attributes?.postsToShow || 2}
+              postLayout={block.attributes?.postLayout || ""}
+              featuredImageAlign={block.attributes?.featuredImageAlign || ""}
+              textColor={block.attributes?.textColor || ""}
+            />
+          </div>
+        );
+
+      case "core/embed":
+        return (
+          <VideoEmbed
+            url={block.attributes?.url}
+            classes={classNameWordpress}
+            styles={styles}
+          />
+        );
+      case "astro/article-search":
+        return <Actualites />;
+      case "core/gallery":
+        return (
+          <div style={styles} class={classNameWordpress}>
+            {(block.innerBlocks || []).map((innerBlock) => (
+              <div>
+                <BlockRendererInner postId={postId} blocks={[innerBlock]} />
+              </div>
+            ))}
+          </div>
+        );
+      case "core/image":
+        return (
+          <Image
+            id={postId}
+            src={block.attributes?.url}
+            height={block.attributes?.height}
+            width={block.attributes?.width}
+            class={classNameWordpress}
+            style={styles}
+            alt={block.attributes?.alt || ""}
+            id={block.attributes?.id}
+          />
+        );
+
+      case "core/button":
+        return (
+          <Button
+            classes={classNameWordpress}
+            styles={styles}
+            backgroundColor={block.attributes?.backgroundColor || ""}
+            textColor={block.attributes?.textColor || ""}
+            url={block.attributes?.url}
+            content={block.attributes?.content || ""}
+          />
+        );
+      case "core/post-title":
+      case "core/heading":
+        return (
+          <Heading
+            transitionName={
+              block.name === "core/post-title" ? `post-title-${postId}` : ""
+            }
+            level={block.attributes?.level || 2}
+            classes={classNameWordpress}
+            styles={styles}
+            content={block.attributes?.content || ""}
+          />
+        );
+      case "core/cover":
+        return (
+          <Cover
+            classes={classNameWordpress}
+            styles={styles}
+            url={block.attributes?.url}
+            height={block.attributes?.height}
+            width={block.attributes?.width}
+            dimRatio={block.attributes?.dimRatio}
+            overlayColor={block.attributes?.overlayColor}
+            customOverlayColor={block.attributes?.customOverlayColor}
+            minHeight={block.attributes?.minHeight}
+            minHeightUnit={block.attributes?.minHeightUnit}
+            id={block.attributes?.id}
+          >
+            <BlockRendererInner
+              postId={postId}
+              blocks={block.innerBlocks || []}
+            />
+          </Cover>
+        );
+      case "core/paragraph":
+        return (
+          <Paragraph
+            classes={classNameWordpress}
+            styles={styles}
+            content={block.attributes?.content}
+          />
+        );
+      case "core/columns":
+      case "core/column":
+        if (
+          block.name === "core/column" &&
+          classNameWordpress.includes("home-famille-card")
+        ) {
+          return (
+            <a href={`${competencesPage}#famille`}>
+              <div style={styles} class={classNameWordpress}>
+                {/* Rendu du contenu du groupe ici */}
+                <BlockRendererInner
+                  postId={postId}
+                  blocks={block.innerBlocks || []}
+                />
+              </div>
+            </a>
+          );
+        } else if (
+          block.name === "core/column" &&
+          classNameWordpress.includes("home-immobilier-card")
+        ) {
+          return (
+            <a href={`${competencesPage}#immobilier`}>
+              <div style={styles} class={classNameWordpress}>
+                {/* Rendu du contenu du groupe ici */}
+                <BlockRendererInner
+                  postId={postId}
+                  blocks={block.innerBlocks || []}
+                />
+              </div>
+            </a>
+          );
+        } else if (
+          block.name === "core/column" &&
+          classNameWordpress.includes("home-civil-card")
+        ) {
+          return (
+            <a href={`${competencesPage}#civil`}>
+              <div style={styles} class={classNameWordpress}>
+                {/* Rendu du contenu du groupe ici */}
+                <BlockRendererInner
+                  postId={postId}
+                  blocks={block.innerBlocks || []}
+                />
+              </div>
+            </a>
+          );
+        }
+
+        // Rendu par défaut pour les blocs qui ne correspondent pas aux conditions ci-dessus
+        return (
+          <div style={styles} class={classNameWordpress}>
+            <BlockRendererInner
+              postId={postId}
+              blocks={block.innerBlocks || []}
+            />
+          </div>
+        );
+
+      case "core/post-content":
+      case "core/group":
+      case "core/buttons":
+        return (
+          <div style={styles} class={classNameWordpress}>
+            <BlockRendererInner
+              postId={postId}
+              blocks={block.innerBlocks || []}
+            />
+          </div>
+        );
+      case "core/list":
+        return (
+          <ul style={styles} class={classNameWordpress}>
+            <BlockRendererInner
+              postId={postId}
+              blocks={block.innerBlocks || []}
+            />
+          </ul>
+        );
+      case "core/list-item":
+        return (
+          <ListItem
+            classes={classNameWordpress}
+            styles={styles}
+            content={block.attributes?.content}
+          />
+        );
+      default:
+        return null;
+    }
+  })
+}

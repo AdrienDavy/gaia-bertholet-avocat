@@ -1,0 +1,106 @@
+---
+import {
+  faMailBulk,
+  faMapLocation,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const contactLink =
+  `${Astro.url.origin}/contact/` || `${Astro.url.origin}/contact`;
+---
+
+<aside class="fixed right-0 top-[7.3rem] w-fit z-50 hidden sm:flex">
+  <div class="mt-3 smartphone bg-blue-sky h-fit w-fit pt-[0.5rem] rounded-l-md">
+    <div class="flex flex-col justify-center items-center">
+      <!-- <svg
+            width="40"
+            height="40"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xml:space="preserve"
+            style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;"
+            viewBox="0 0 96 222.5"
+            x="0px"
+            y="0px"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            ><defs
+              ><style type="text/css">
+                .fil0 {
+                  fill: #fff;
+                }
+              </style></defs
+            ><g
+              ><path
+                class="fil0"
+                d="M18 0l59 0c10,0 18,8 18,18l0 141c0,10 -8,18 -18,18l-59 0c-10,0 -18,-8 -18,-18l0 -141c0,-10 8,-18 18,-18zm17 7l25 0c2,0 2,4 0,4l-25 0c-2,0 -2,-4 0,-4zm13 153c3,0 6,3 6,6 0,3 -3,6 -6,6 -3,0 -6,-3 -6,-6 0,-3 3,-6 6,-6zm-41 -142l81 0 0 137 -81 0 0 -137z"
+              ></path></g
+            ></svg
+          > -->
+      <p class="text-blue-light pb-2 pr-2 pl-2">Contact</p>
+    </div>
+  </div>
+  <div class="grid justify-center items-center shadow-xl rounded-bl-xl">
+    <div
+      class="bg-starlight text-blue-sky flex justify-center items-center w-full p-5 relative"
+    >
+      <button class="group learn-more" title="Vers la page contact">
+        <span class="circle bg-blue-sky" aria-hidden="true">
+          <span class="arrow"></span>
+        </span>
+        <a class="button-text text-blue-sky" href={contactLink}>Contact</a>
+      </button>
+    </div>
+    <div
+      class="bg-blue-sky p-5 gap-2 grid justify-center items-center rounded-bl-xl"
+    >
+      <div class="text-blue-light flex flex-col justify-center">
+        <FontAwesomeIcon icon={faPhone} />
+        <div
+          class="text-blue-light grid justify-center pt-2 hover:text-starlight transition-all duration-300 ease"
+        >
+          <a href="tel:07 69 88 03 90">07 69 88 03 90</a>
+        </div>
+      </div>
+      <div class="text-blue-light flex flex-col justify-center">
+        <FontAwesomeIcon icon={faMailBulk} />
+        <div
+          class="text-blue-light grid justify-center pt-2 hover:text-starlight transition-all duration-300 ease"
+        >
+          <a href="mailto:gaia.bertholet.avocat@gmail.com">
+            gaia.bertholet.avocat@gmail.com
+          </a>
+        </div>
+      </div>
+      <div class="text-starlight flex flex-col justify-center">
+        <FontAwesomeIcon icon={faMapLocation} />
+        <div
+          class="text-blue-light grid justify-center pt-2 hover:text-starlight transition-all duration-300 ease"
+        >
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=24+Cr+Pierre+Puget,+13006+Marseille"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Ouvrir la carte sur Google Maps"
+          >
+            24 Cr Pierre Puget, 13006 Marseille
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script>
+  document.addEventListener("scroll", function () {
+    let aside = document.querySelector("aside");
+
+    if (window.scrollY >= 100) {
+      aside?.classList.remove("top-[7.3rem]");
+      aside?.classList.add("top-[3.3rem]");
+    } else {
+      aside?.classList.remove("top-[3.3rem]");
+      aside?.classList.add("top-[7.3rem]");
+    }
+  });
+</script>

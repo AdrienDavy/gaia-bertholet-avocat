@@ -5,7 +5,15 @@ export default {
 		'./node_modules/@wp-block-tools/styles/**/*.js',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				"starlight": "var(--color--starlight)",
+				"blue-light": "var(--color--blue-light)",
+				"blue-med": "var(--color--blue-med)",
+				"blue-sky": "var(--color--blue-sky)",
+				"grey-light": "var(--color--grey-light)",
+			},
+		},
 	},
 	plugins: [],
 }

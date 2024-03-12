@@ -1,0 +1,36 @@
+---
+import { replaceUrls } from "../utils/replaceUrls";
+import { joinClasses } from "../utils/joinClasses";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+type Props = {
+  styles: string;
+  classes: string;
+  label: string;
+  url: string;
+};
+const { styles, classes, label, url } = Astro.props;
+const allClasses = joinClasses(
+  classes,
+  "navlink-1 group relative sm:flex justify-center text-blue-sky sm:py-3 py-12",
+);
+const href = replaceUrls(url, Astro.url.host);
+---
+
+<li class={allClasses} style={styles}>
+  <a
+    href={href}
+    class="block px-6 sm:px-0 py-3 sm:py-0 !text-xl font-bold sm:font-normal sm:text-base"
+  >
+    {label}
+    <FontAwesomeIcon
+      className="text-xs pl-1 !hidden sm:!inline"
+      icon={faChevronDown}
+    />
+  </a>
+  <ul
+    class="-mt-[0.45rem] hidden z-20 sm:group-hover:block sm:bg-starlight sm:absolute sm:top-full text-center whitespace-nowrap py-2 sm:shadow-lg rounded-bl-xl rounded-br-xl"
+  >
+    <slot />
+  </ul>
+</li>

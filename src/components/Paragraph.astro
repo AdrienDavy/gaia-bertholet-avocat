@@ -1,0 +1,16 @@
+---
+import { processContentAndReplaceUrls } from "../utils/processContentAndReplaceUrls";
+type Props = {
+  styles: string;
+  classes: string;
+  content: string;
+};
+const { styles, classes, content } = Astro.props;
+const newContent = processContentAndReplaceUrls(
+  content,
+  `${import.meta.env.PUBLIC_PROTOCOL}${import.meta.env.PUBLIC_WP_URL}`,
+  Astro.url.origin,
+);
+---
+
+<p style={styles} class={classes} set:html={newContent} />

@@ -1,0 +1,24 @@
+---
+import { transformYouTubeUrl } from "../utils/embedYoutubeUrl.ts";
+import { joinClasses } from "../utils/joinClasses";
+type Props = {
+  url: string;
+  classes: string;
+  styles: string;
+};
+const { url, classes, styles } = Astro.props;
+const embedUrl = transformYouTubeUrl(url);
+const allClasses = joinClasses(
+  classes,
+  "relative overflow-hidden sm:w-8/12 w-11/12",
+);
+---
+
+<div class={allClasses} style="padding-top: 56.25%;">
+  <iframe
+    class="absolute top-0 left-0 w-full sm:h-2/3 h-full"
+    src={embedUrl}
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>

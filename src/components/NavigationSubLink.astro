@@ -1,0 +1,35 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+import { replaceUrls } from "../utils/replaceUrls";
+type Props = {
+  styles: string;
+  classes: string;
+  label: string;
+  url: string;
+};
+const { styles, classes, label, url } = Astro.props;
+const getAnchor = (label: string): string => {
+  if (label.includes("famille")) {
+    return "#famille";
+  } else if (label.includes("immobilier")) {
+    return "#immobilier";
+  } else if (label.includes("civil")) {
+    return "#civil";
+  } else {
+    return "";
+  }
+};
+
+const href = replaceUrls(url, Astro.url.host);
+const hrefAnchor = `${href}${getAnchor(label)}`;
+const allClasses = joinClasses(
+  classes,
+  "navsublink block px-6 sm:px-5 py-3 sm:hover:bg-blue-sky sm:hover:text-starlight",
+);
+---
+
+<li class={allClasses} style={styles}>
+  <a href={hrefAnchor} class="block">
+    {label}
+  </a>
+</li>

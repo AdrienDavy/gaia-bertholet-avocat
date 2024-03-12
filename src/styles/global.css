@@ -1,3 +1,543 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+  button.learn-more {
+    width: 12rem;
+    height: auto;
+  }
+
+  button.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: block;
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    /* background: #282936; */
+    border-radius: 1.625rem;
+  }
+
+  button.learn-more .circle .arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    /* background: #fff; */
+  }
+
+  button.learn-more .circle .arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: 0.625rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    /* background: none; */
+  }
+
+  button.learn-more .circle .arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.25rem;
+    right: 0.0625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #fff;
+    border-right: 0.125rem solid #fff;
+    transform: rotate(45deg);
+  }
+
+  button.learn-more .button-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.75rem 0;
+    margin: 0 0 0 1.85rem;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  button:hover .circle {
+    width: 100%;
+  }
+
+  button:hover .circle .arrow {
+    background: #fff;
+    transform: translate(1rem, 0);
+  }
+
+  button:hover .button-text {
+    color: #fff;
+  }
+}
+
+@layer base {
+  body {
+    font-family: "Montserrat Variable", sans-serif;
+    list-style: none;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      letter-spacing: 0 !important;
+    }
+  }
+
+  h2 {
+    font-size: clamp(1rem, 4.5vw, 2.25rem);
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  h4 {
+    font-size: clamp(1.125rem, 3.5vw, 1.75rem);
+  }
+
+  h5 {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  h6 {
+    font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+  }
+  p,
+  li,
+  a,
+  input::placeholder {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+
+  body {
+    --sb-track-color: #99e7fe;
+    --sb-thumb-color: #0174cf;
+    --sb-size: 14px;
+  }
+
+  body::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 9px;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    body {
+      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+  }
+}
+
+/* --------------------------------------------------------- */
+/* -------------------------HEADER-------------------------- */
+/* --------------------------------------------------------- */
+.logo-header {
+  @apply flex flex-col items-center justify-center relative sm:w-[130px]  w-auto sm:h-full h-[130px]  transition-all;
+  > a > img {
+    @apply transition-all;
+  }
+}
+
+.logo-scrolled {
+  @apply flex flex-col items-center justify-center relative sm:w-[120px] w-auto sm:h-full h-[120px] transition-all;
+  > a > img {
+    @apply w-[50px] transition-all;
+  }
+}
+
+/* --------------------------------------------------------- */
+/* -------------------------HOME-------------------------- */
+/* --------------------------------------------------------- */
+
+.home-section-cabinet > div > div:first-of-type {
+  @apply sm:rounded-br-3xl xl:p-12 sm:!pl-10 sm:!pr-20 md:!pl-20 !pl-4 !pr-4 xl:!py-32;
+}
+
+.home-section-cabinet > div > div:nth-of-type(2) > img {
+  @apply sm:-ml-16 xl:max-w-screen-sm w-full mx-auto my-4 relative z-10 shadow-xl sm:!rounded-xl;
+}
+
+.honoraires-section-competences {
+  @apply -mt-40;
+}
+.home-section-competences > a div,
+.cabinet-section-competences a div,
+.honoraires-section-competences a div {
+  @apply rounded-xl relative;
+}
+
+.home-section-competences > a:nth-of-type(2)::before,
+.cabinet-section-competences a:nth-of-type(2)::before,
+.honoraires-section-competences a:nth-of-type(2)::before {
+  @apply rounded-xl;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.6)
+  );
+  z-index: 10;
+}
+
+.home-section-competences a:nth-of-type(2) div,
+.cabinet-section-competences a:nth-of-type(2) div,
+.honoraires-section-competences a:nth-of-type(2) div {
+  background-color: transparent !important;
+}
+
+.home-section-competences a:nth-of-type(2),
+.cabinet-section-competences a:nth-of-type(2),
+.honoraires-section-competences a:nth-of-type(2) {
+  background: url("/immobilier.jpg");
+  background-size: cover;
+  position: relative;
+  background-position: center;
+  display: block;
+}
+
+.home-section-competences > a,
+.cabinet-section-competences a,
+.honoraires-section-competences a {
+  @apply my-5 rounded-xl transition-all duration-300 ease-in-out shadow-xl hover:shadow-2xl hover:scale-[0.99];
+  > div div {
+    @apply h-fit;
+  }
+}
+
+.home-section-competences > a > div img,
+.cabinet-section-competences a > div img,
+.honoraires-section-competences a > div img {
+  @apply h-20 object-contain z-20 relative;
+}
+
+.home-section-competences > a h4,
+.cabinet-section-competences a h4,
+.honoraires-section-competences a h4 {
+  padding-top: 0.5rem;
+  background: transparent !important;
+  z-index: 20;
+  position: relative;
+}
+
+.home-section-competences > a p,
+.cabinet-section-competences a p,
+.honoraires-section-competences a p {
+  @apply bg-transparent z-20 relative;
+}
+
+.home-section-honoraires > div {
+  @apply !pt-0 sm:!pt-20;
+}
+.home-section-honoraires > div > div:first-of-type > img {
+  @apply sm:-mr-16 xl:max-w-screen-sm w-8/12 sm:w-full mx-auto my-4 relative z-10 shadow-xl;
+}
+
+.home-section-honoraires > div > div:nth-of-type(2) {
+  @apply sm:rounded-l-3xl xl:p-12 sm:!pr-10 sm:!pl-20 md:!pr-20 !pr-4 !pl-4 z-0 relative xl:!py-32;
+}
+
+.home-reassurances {
+  @apply sm:-mb-28 relative z-10;
+}
+
+.home-reassurances > div:first-child > div {
+  @apply sm:rounded-xl shadow-xl;
+}
+
+.home-reassurances div > div img {
+  @apply h-20 object-contain z-20 relative;
+}
+
+.home-section-actualites {
+  @apply !pt-5 sm:!pt-40;
+}
+
+/* --------------------------------------------------------- */
+/* -------------------------CABINET-------------------------- */
+/* --------------------------------------------------------- */
+
+.cabinet-presentation {
+  @apply !px-0 !pt-0 sm:!pt-2;
+}
+.cabinet-presentation div div:first-of-type {
+  @apply sm:rounded-br-3xl md:!pl-20 !pl-4 !pr-4;
+}
+
+.cabinet-presentation > div > div:nth-of-type(2) img {
+  @apply w-full my-4 relative sm:!rounded-xl z-10 !shadow-xl;
+}
+
+.cabinet-section-competences {
+  @apply !-mt-52 mx-4 sm:mx-auto;
+}
+.cabinet-section-competences > div:first-of-type > div {
+  @apply shadow-xl;
+}
+
+/* --------------------------------------------------------- */
+/* ----------------------COMPETENCES------------------------ */
+/* --------------------------------------------------------- */
+
+.competences-section-famille,
+.competences-section-civil {
+  @apply sm:!pb-14 !pt-2;
+}
+
+.competences-section-famille > div:nth-of-type(2),
+.competences-section-civil > div:nth-of-type(2),
+.competences-section-immobilier > div:nth-of-type(2) {
+  @apply !pl-4 !pr-4;
+}
+
+.competences-section-famille div:nth-of-type(3) > div,
+.competences-section-civil div:nth-of-type(3) > div {
+  @apply flex flex-col-reverse sm:flex-row gap-0 sm:gap-8;
+}
+
+.competences-section-famille div:nth-of-type(3) > div > div:nth-of-type(2),
+.competences-section-civil div:nth-of-type(3) > div > div:nth-of-type(2) {
+  @apply overflow-hidden sm:rounded-xl lg:-ml-16 sm:mr-8 lg:mr-28 relative w-full pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl;
+}
+.competences-section-famille
+  div:nth-of-type(3)
+  > div
+  > div:nth-of-type(2)::before,
+.competences-section-civil
+  div:nth-of-type(3)
+  > div
+  > div:nth-of-type(2)::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl z-10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+}
+
+.competences-section-famille
+  div:nth-of-type(3)
+  > div
+  > div:nth-of-type(2)
+  > img,
+.competences-section-civil div:nth-of-type(3) > div > div:nth-of-type(2) > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+.competences-section-famille div:nth-of-type(3) > div > div:first-of-type,
+.competences-section-civil div:nth-of-type(3) > div > div:first-of-type {
+  @apply sm:rounded-r-3xl xl:p-12 !pl-4 sm:!pl-10 !pr-4 sm:!pr-20 lg:!pl-28 z-0 relative xl:!py-16;
+}
+
+.competences-section-immobilier {
+  @apply !pt-8 sm:!pb-16;
+}
+
+.competences-section-immobilier div:nth-of-type(3) > div {
+  @apply gap-0 sm:gap-8;
+}
+
+.competences-section-immobilier div:nth-of-type(3) > div > div:nth-of-type(2) {
+  @apply sm:rounded-l-3xl xl:p-12 !pr-4 sm:!pr-10 !pl-4 sm:!pl-20 lg:!pr-28 z-0 relative xl:!py-16;
+}
+
+.competences-section-immobilier div:nth-of-type(3) > div > div:first-of-type {
+  @apply overflow-hidden sm:rounded-xl lg:-mr-16 sm:ml-8 lg:ml-28 relative w-full pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl z-10;
+}
+
+.competences-section-immobilier
+  div:nth-of-type(3)
+  > div
+  > div:first-of-type::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+  z-index: 1;
+}
+
+.competences-section-immobilier
+  div:nth-of-type(3)
+  > div
+  > div:first-of-type
+  > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+/* --------------------------------------------------------- */
+/* -----------------------HONORAIRES------------------------ */
+/* --------------------------------------------------------- */
+
+.honoraires-section-fixation {
+  @apply flex flex-col-reverse sm:flex-row gap-0 sm:gap-8;
+}
+.honoraires-section-fixation div:first-of-type {
+  @apply sm:rounded-r-3xl xl:p-12 !pl-4 sm:!pl-10 !pr-4 sm:!pr-20 lg:!pl-28 z-0 relative xl:!py-16;
+}
+.honoraires-section-fixation div:nth-of-type(2) {
+  @apply overflow-hidden sm:rounded-xl lg:-ml-16 sm:mr-8 lg:mr-28 relative w-full h-1/2 my-auto pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl;
+}
+
+.honoraires-section-fixation div:nth-of-type(2)::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl z-10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+}
+
+.honoraires-section-fixation div:nth-of-type(2) > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+.honoraires-section-convention {
+  @apply gap-0 sm:gap-8;
+}
+.honoraires-section-convention div:nth-of-type(2) {
+  @apply sm:rounded-l-3xl xl:p-12 !pr-4 sm:!pr-10 !pl-4 sm:!pl-20 lg:!pr-28 relative xl:!py-8;
+}
+.honoraires-section-convention div:nth-of-type(2) div {
+  @apply !py-4;
+}
+.honoraires-section-convention div:first-of-type {
+  @apply z-10 overflow-hidden sm:rounded-xl lg:-mr-16 sm:ml-8 lg:ml-28 relative w-full h-1/2 my-auto pt-[50%] sm:pt-[100%] lg:pt-[25%] max-w-3xl;
+}
+
+.honoraires-section-convention > div:first-of-type::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 bottom-0 sm:rounded-xl z-10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(1, 116, 207, 0.8),
+    rgba(1, 116, 207, 0.4)
+  );
+}
+
+.honoraires-section-convention div:first-of-type > img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+/* --------------------------------------------------------- */
+/* -------------------------CONTACT-------------------------- */
+/* --------------------------------------------------------- */
+aside {
+  transform: translateX(80%);
+  transition: all 300ms ease-in-out;
+  &:hover {
+    transform: translateX(0%);
+  }
+}
+
+.wpcf7 {
+  @apply flex justify-center bg-starlight shadow-lg p-5 rounded-xl sm:w-3/4 mx-auto;
+}
+
+.wpcf7-form {
+  @apply max-w-sm sm:w-10/12 grid gap-5;
+
+  p,
+  h3 {
+    @apply text-blue-sky text-center;
+  }
+}
+.wpcf7-list-item-label {
+  @apply underline;
+}
+
+input[type="checkbox"] {
+  @apply mr-5;
+}
+input[name="quiz-672"] {
+  @apply mt-2 text-center;
+}
+
+.wpcf7-form-control:not(.wpcf7-acceptance) {
+  @apply p-2 w-full resize-none rounded-md text-blue-sky bg-grey-light;
+}
+
+input[name="your-file"] {
+  @apply bg-starlight;
+}
+
+.wpcf7-quiz {
+  @apply max-w-12 block mx-auto;
+}
+
+.form-error {
+  @apply text-red-600;
+}
+
+.wpcf7-submit {
+  @apply w-full text-white inline-block uppercase font-bold tracking-[1.3px] bg-blue-sky rounded-full py-3 px-6 cursor-pointer;
+}
+
+/* --------------------------------------------------------- */
+/* -------------------------FOOTER-------------------------- */
+/* --------------------------------------------------------- */
+
+footer div:nth-of-type(1) {
+  @apply flex-col items-center;
+  > div:nth-of-type(1) {
+    @apply flex sm:flex-wrap md:items-stretch sm:flex-row justify-center;
+  }
+}
+
+footer div:nth-of-type(1) > div:nth-of-type(1) > .column-footer {
+  @apply flex-grow flex-shrink-0 sm:basis-[300px] !py-2 sm:!py-5 flex justify-center;
+  .group-footer {
+    @apply !px-0 flex sm:inline;
+    ul > li {
+      @apply !py-1 sm:py-2 sm:text-left text-center;
+    }
+  }
+}

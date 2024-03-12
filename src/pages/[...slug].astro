@@ -1,0 +1,112 @@
+---
+import type { Block } from "@wp-block-tools/styles";
+import BlockRenderer from "../components/BlockRenderer.astro";
+import CommonHead from "../components/CommonHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import ContactLink from "../components/ContactLink.astro";
+interface AstroParams {
+  slug?: string;
+}
+const astroParams: AstroParams = Astro.params;
+export async function getStaticPaths() {
+  const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+  query AllPages {
+          pages(first: 10000) {
+            nodes {
+              uri
+              blocks
+            }
+          }
+          posts(first: 10000) {
+            nodes {
+              uri
+              blocks
+            }
+          }
+        }
+      `,
+    }),
+  });
+  try {
+    const { data } = await response.json();
+    return [...data.pages.nodes, ...data.posts.nodes]
+      .filter((page: any) => {
+        let found = false;
+        const hasActualites = (blocks: Block[]) => {
+          for (let block of blocks) {
+            if (block.name === "astro/article-search") {
+              found = true;
+              break;
+            }
+            if (block.innerBlocks) {
+              hasActualites(block.innerBlocks);
+            }
+          }
+        };
+        hasActualites(page.blocks);
+        return !found;
+      })
+      .map((page: any) => ({
+        params: { slug: page.uri === "/" ? undefined : page.uri },
+      }));
+  } catch (error) {
+    console.error(
+      "Erreur lors de la requête ou lors du traitement des données :",
+      error,
+    );
+    throw new Error("Impossible d'extraire les données");
+  }
+}
+
+const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    query: `
+    query PageQuery($uri: String!) {
+      allSettings {
+    generalSettingsLanguage
+  }
+      nodeByUri(uri: $uri) {
+        ... on ContentNode {
+          databaseId
+          blocks
+          seo {
+            metaDesc
+            title
+          }
+        }
+      }      
+    }
+    `,
+    variables: {
+      uri: astroParams.slug || "/",
+    },
+  }),
+});
+
+const { data } = await response.json();
+const blocks = (data.nodeByUri?.blocks || []) as Block[];
+const seo = data.nodeByUri?.seo;
+const language = data.allSettings.generalSettingsLanguage;
+const postId = data.nodeByUri?.databaseId;
+---
+
+<html lang={language}>
+  <CommonHead title={seo.title || ""} description={seo.metaDesc || ""} />
+  <body>
+    <Header blocks={blocks} />
+    <ContactLink />
+    <BlockRenderer postId={postId} blocks={blocks} />
+    <Footer blocks={blocks} />
+  </body>
+</html>

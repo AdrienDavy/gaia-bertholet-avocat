@@ -1,0 +1,56 @@
+---
+import type { HTMLTag } from "astro/types";
+type Props = {
+  id?: string;
+  styles: string;
+  classes: string;
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  content: string;
+  transitionName?: string;
+};
+const { id, level, styles, classes, content, transitionName } = Astro.props;
+const Element: HTMLTag = `h${level}`;
+
+// Fonction pour ajuster l'id basé sur le contenu et le level
+function adjustIdByMultipleContents(
+  content: string,
+  level: number,
+  currentId: string | undefined,
+): string | undefined {
+  const keywords = ["famille", "immobilier", "civil"];
+  const levelValue = 2;
+
+  for (const keyword of keywords) {
+    if (content.includes(keyword) && level === levelValue) {
+      return keyword; // Retourne un id modifié si les conditions sont remplies
+    }
+  }
+
+  return currentId; // Retourne l'id actuel si les conditions ne sont pas remplies
+}
+
+// Appel de la fonction modifiée pour ajuster l'id
+const adjustedId = adjustIdByMultipleContents(content, level, id);
+---
+
+{
+  !!transitionName && (
+    <Element
+      id={adjustedId}
+      transition:name={transitionName}
+      set:html={content}
+      style={styles}
+      class={classes}
+    />
+  )
+}
+{
+  !transitionName && (
+    <Element
+      id={adjustedId}
+      set:html={content}
+      style={styles}
+      class={classes}
+    />
+  )
+}

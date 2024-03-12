@@ -1,0 +1,17 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+type Props = {
+  classes: string;
+  styles: string;
+};
+const { classes, styles } = Astro.props;
+const allClasses = joinClasses(classes, "");
+---
+
+<div class={allClasses} style={styles}>
+  <iframe
+    class="max-w-full h-60"
+    src="https://www.google.com/maps/d/u/0/embed?mid=1-F43AU2IIXyBb5fQU6kZ4OuQPjOFpnA&ehbc=2E312F&noprof=1"
+    width="640"
+    height="480"></iframe>
+</div>

@@ -1,0 +1,138 @@
+---
+import { joinClasses } from "../utils/joinClasses";
+import HeaderInner from "./Header.astro";
+import { getBlockStyling, type Block } from "@wp-block-tools/styles";
+
+import { Image } from "astro:assets";
+import Navigation from "./Navigation.astro";
+import NavigationLink from "./NavigationLink.astro";
+import NavigationSubmenu from "./NavigationSubmenu.astro";
+import NavigationSubLink from "./NavigationSubLink.astro";
+
+type Props = {
+  blocks: Block[];
+};
+
+const { blocks } = Astro.props;
+const homeUrl = Astro.url.origin;
+---
+
+{
+  blocks.map((block) => {
+    const { styles, classes } = getBlockStyling(block);
+    const classNameWordpress = joinClasses(
+      classes,
+      block.attributes?.className || "",
+    );
+
+    switch (block.name) {
+      case "core/image":
+        return (
+          <Image
+            src={block.attributes?.url}
+            height={block.attributes?.height}
+            width={block.attributes?.width}
+            class={classNameWordpress}
+            style={styles}
+            alt={block.attributes?.alt || ""}
+          />
+        );
+      case "core/navigation-submenu":
+        return (
+          <NavigationSubmenu
+          classes={classNameWordpress}
+          styles={styles}
+          label={block.attributes?.label || ""}
+          url={block.attributes?.url || ""}
+          >
+          {block.innerBlocks?.map((link) => {
+            const classNameSubLink = joinClasses(classes, link.attributes?.className || "");
+
+            return(              
+            <NavigationSubLink
+                classes={classNameSubLink}
+                styles={styles}
+                label={link.attributes?.label || ""}
+                url={link.attributes?.url || ""}
+              />
+          )})}
+          </NavigationSubmenu>
+        );
+      case "core/navigation-link":
+        
+        return (
+          <NavigationLink
+            classes={classNameWordpress}
+            styles={styles}
+            label={block.attributes?.label || ""}
+            url={block.attributes?.url || ""}
+          />
+        );
+      case "core/navigation":
+        return (
+          <Navigation classes={classNameWordpress} styles={styles}>
+            <HeaderInner blocks={block.innerBlocks || []} />
+          </Navigation>
+        );
+      case "core/group":
+        const headerClasses = joinClasses(
+          `${block.attributes?.className || ""} header !fixed w-full bg-starlight !mt-16 shadow-lg transition-all duration-300 ease-in-out`,
+          classes,
+        );
+        const TagName = block.attributes?.tagName || "div";
+        return (         
+          <TagName style={styles} class={headerClasses}>
+            <HeaderInner blocks={block.innerBlocks || []} />
+          </TagName>        
+        );
+      case "core/site-logo":
+        const navlogoClasses = joinClasses(
+          classes,
+          `${block.attributes?.className || ""}logo-header`,
+        );
+        return (
+          <div style={styles} class={navlogoClasses}>
+            <a
+              class="absolute block"
+              href={homeUrl}
+              title="Vers l'accueil"
+            >
+              <Image
+                height={block.attributes?.height || 140}
+                width={block.attributes?.width || 140}
+                src={block.attributes?.url || ""}
+                alt=""
+              />
+            </a>
+          </div>
+        );
+      case "core/template-part":
+        if (block.attributes?.slug === "common-header") {
+          return <HeaderInner blocks={block.innerBlocks || []} />;
+        }
+
+      default:
+        return null;
+    }
+  })
+}
+
+<script>
+ document.addEventListener("scroll", function () {
+    let logo = document.querySelector(".logo-header, .logo-scrolled");
+    let header = document.querySelector(".header"); // Assurez-vous que ce sélecteur est correct
+
+    if (window.scrollY >= 100) {
+      header?.classList.remove("!mt-16");
+      header?.classList.add("!mt-0");
+        logo?.classList.add("logo-scrolled");
+        logo?.classList.remove("logo-header");
+    } else {
+        header?.classList.remove("!mt-0");
+        header?.classList.add("!mt-16");
+        logo?.classList.remove("logo-scrolled");
+        logo?.classList.add("logo-header");
+    }
+});
+  </script>
+  

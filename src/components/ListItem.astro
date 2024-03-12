@@ -1,0 +1,23 @@
+---
+import { processContentAndReplaceUrls } from "../utils/processContentAndReplaceUrls";
+
+import { joinClasses } from "../utils/joinClasses";
+type Props = {
+  styles: string;
+  classes: string;
+  content: string;
+};
+const { styles, classes, content } = Astro.props;
+const newContent = processContentAndReplaceUrls(
+  content,
+  `${import.meta.env.PUBLIC_PROTOCOL}${import.meta.env.PUBLIC_WP_URL}`,
+  Astro.url.origin,
+);
+
+const allClasses = joinClasses(
+  classes,
+  "py-2 [&_a]:hover:text-starlight [&_a]:transition-all [&_a]:duration-300 [&_a]:ease",
+);
+---
+
+<li class={allClasses} style={styles} set:html={newContent} />

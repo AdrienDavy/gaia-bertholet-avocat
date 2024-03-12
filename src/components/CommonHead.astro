@@ -1,0 +1,46 @@
+---
+// Supports weights 100-900
+import "@fontsource-variable/montserrat";
+import "../styles/global.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { ViewTransitions } from "astro:transitions";
+config.autoAddCss = false;
+type Props = {
+  title: string;
+  description: string;
+};
+const response = await fetch(`${import.meta.env.WPGRAPHQL_URL}`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    query: `
+    query MetaDataQuery {
+      cssVariables
+      siteLogo{
+        sourceUrl
+      }
+    }
+    `,
+  }),
+});
+const { data } = await response.json();
+const { title, description } = Astro.props;
+---
+
+<head>
+  <meta charset="utf-8" />
+  {
+    !!data.siteLogo?.sourceUrl && (
+      <link rel="icon" href={data.siteLogo.sourceUrl} />
+    )
+  }
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {!!data.cssVariables && <style set:html={`:root{${data.cssVariables}}`} />}
+  <ViewTransitions />
+</head>
