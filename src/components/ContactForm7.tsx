@@ -117,7 +117,7 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
   return (
     <>
       {showSuccessMessage && (
-        <div className="bg-green-600 p-4 text-white font-bold">
+        <div className="bg-green-600 p-4 m-4 text-white font-bold rounded-md">
           <p>{successMessage}</p>
         </div>
       )}
@@ -131,6 +131,11 @@ export default function ContactForm7({ formId, formMarkup }: Props) {
         ref={formWrapperRef}
         dangerouslySetInnerHTML={{ __html: formMarkup }}
       />
+      {showSuccessMessage && (
+        <div className="bg-green-600 p-4 m-4 text-white font-bold rounded-md">
+          <p>{successMessage}</p>
+        </div>
+      )}
     </>
   );
 }

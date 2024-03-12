@@ -5,7 +5,8 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const contactLink = `${Astro.url.origin}/contact`;
+const contactLink =
+  `${Astro.url.origin}/contact/` || `${Astro.url.origin}/contact`;
 ---
 
 <aside class="fixed right-0 top-[7.3rem] w-fit z-50 hidden sm:flex">

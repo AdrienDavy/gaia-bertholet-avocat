@@ -37,43 +37,48 @@ filterArticles = filterArticles.slice(offset, offset + pageSize);
       placeholder="Rechercher par mot-clé..."
     />
   </div>
-  <button
-    type="submit"
-    class="text-white w-1/4 mx-auto inline-block uppercase font-bold tracking-[1.3px] bg-blue-sky rounded-full py-3 px-6"
-    >Rechercher</button
-  >
+  <button class="group learn-more mx-auto" type="submit">
+    <span class="circle bg-blue-sky aria-hidden='true'">
+      <span class="arrow"></span>
+    </span>
+    <span class=`button-text text-blue-sky`>Rechercher</span>
+  </button>
 </form>
 <div class="grid gap-10 grid-cols-1 sm:grid-cols-2 !mx-5 md:!mx-auto">
   {
-    filterArticles.map((post: any) => {
-      return (
-        <a
-          href={post.uri}
-          class="shadow-lg hover:bg-blue-light transition-all rounded-xl hover:shadow-2xl hover:scale-[0.99]"
-        >
-          {!!post.featuredImage && (
-            <Image
-              src={post.featuredImage.node.sourceUrl}
-              height={post.featuredImage.node.mediaDetails.height}
-              width={post.featuredImage.node.mediaDetails.width}
-              inferSize={true}
-              alt={post.featuredImage.node.altText || ""}
-              class="h-40 w-full object-cover rounded-t-xl"
-            />
-          )}
-          <div class="p-2 flex flex-col items-center text-center text-blue-sky">
-            <p
-              class="pt-2 text-3xl"
-              transition:name={`post-title-${post.databaseId}`}
-            >
-              <strong>{post.title}</strong>
-            </p>
-            <p class="pb-2 text-md">{formatDate(post.date)}</p>
-            <p set:html={truncateText(post.excerpt, 50)} />
-          </div>
-        </a>
-      );
-    })
+    filterArticles.length === 0 ? (
+      <p class="text-center text-blue-sky col-span-2">Aucun résultat...</p>
+    ) : (
+      filterArticles.map((post: any) => {
+        return (
+          <a
+            href={post.uri}
+            class="shadow-lg hover:bg-blue-light transition-all rounded-xl hover:shadow-2xl hover:scale-[0.99]"
+          >
+            {!!post.featuredImage && (
+              <Image
+                src={post.featuredImage.node.sourceUrl}
+                height={post.featuredImage.node.mediaDetails.height}
+                width={post.featuredImage.node.mediaDetails.width}
+                inferSize={true}
+                alt={post.featuredImage.node.altText || ""}
+                class="h-40 w-full object-cover rounded-t-xl"
+              />
+            )}
+            <div class="p-2 flex flex-col items-center text-center text-blue-sky">
+              <p
+                class="pt-2 text-3xl"
+                transition:name={`post-title-${post.databaseId}`}
+              >
+                <strong>{post.title}</strong>
+              </p>
+              <p class="pb-2 text-md">{formatDate(post.date)}</p>
+              <p set:html={truncateText(post.excerpt, 50)} />
+            </div>
+          </a>
+        );
+      })
+    )
   }
 </div>
 <div class="flex gap-2 justify-center py-2">

@@ -49,7 +49,7 @@ const request = new URL(Astro.request.url);
 const isHomePage = request.pathname === "/";
 const isPostPage = request.pathname === "/actualites/";
 const isCabinetPage = request.pathname === "/le-cabinet/";
-const isContactPage = request.pathname === "/contact";
+const isContactPage = request.pathname === "/contact/" || "/contact";
 ---
 
 <div
@@ -73,11 +73,11 @@ const isContactPage = request.pathname === "/contact";
   }
   {
     !!isHomePage && (
-      <div class="absolute bottom-8 z-40 text-blue-light text-center left-1/2 -translate-x-1/2 flex-col flex">
-        <button type="button" class="">
+      <div class="absolute bottom-20 z-50 text-blue-light text-center left-1/2 -translate-x-1/2 flex-col hidden sm:flex">
+        <button type="button" class="enter scroll-btn z-50 cursor-pointer">
           ENTRER
         </button>
-        <FontAwesomeIcon className="text-xs pl-1" icon={faChevronDown} />
+        <FontAwesomeIcon className="text-xs pl-1 z-50" icon={faChevronDown} />
       </div>
     )
   }
@@ -160,4 +160,45 @@ const isContactPage = request.pathname === "/contact";
       <div class="-z-20 right-0 w-full h-full absolute bg-blue-sky bottom-0" />
     )
   }
+  {
+    !!isHomePage && (
+      <div class="-z-20 right-0 w-full h-full absolute bg-blue-sky bottom-0 block sm:hidden" />
+    )
+  }
 </div>
+<script>
+  window.addEventListener("load", () => {
+    const scrollBtn = document.querySelector(".scroll-btn");
+
+    scrollBtn?.addEventListener("click", () => {
+      const targetScroll = window.innerHeight; // Destination du défilement (100vh dans cet exemple)
+      const duration = 1000; // Durée de l'animation en millisecondes
+
+      let start: any = null;
+      const initialScroll = window.scrollY;
+
+      function step(timestamp: any) {
+        if (!start) start = timestamp;
+        const progress = timestamp - start;
+        const fraction = Math.min(progress / duration, 1); // Assurez-vous que la fraction ne dépasse jamais 1
+
+        // Une fonction d'accélération simple - cela pourrait être remplacé par une fonction basée sur une courbe de Bézier
+        const easing =
+          fraction < 0.5
+            ? 4 * fraction * fraction * fraction
+            : (fraction - 1) * (2 * fraction - 2) * (2 * fraction - 2) + 1;
+
+        window.scrollTo(
+          0,
+          initialScroll + (targetScroll - initialScroll) * easing,
+        );
+
+        if (progress < duration) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  });
+</script>

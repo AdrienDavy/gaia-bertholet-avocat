@@ -194,7 +194,7 @@
 }
 
 .home-section-cabinet > div > div:nth-of-type(2) > img {
-  @apply sm:-ml-16 xl:max-w-screen-sm w-8/12 sm:w-full mx-auto my-4 relative z-10 shadow-xl;
+  @apply sm:-ml-16 xl:max-w-screen-sm w-full mx-auto my-4 relative z-10 shadow-xl sm:!rounded-xl;
 }
 
 .honoraires-section-competences {
@@ -309,7 +309,7 @@
 }
 
 .cabinet-presentation > div > div:nth-of-type(2) img {
-  @apply w-full my-4 relative !rounded-xl z-10 !shadow-xl;
+  @apply w-full my-4 relative sm:!rounded-xl z-10 !shadow-xl;
 }
 
 .cabinet-section-competences {
@@ -326,6 +326,12 @@
 .competences-section-famille,
 .competences-section-civil {
   @apply sm:!pb-14 !pt-2;
+}
+
+.competences-section-famille > div:nth-of-type(2),
+.competences-section-civil > div:nth-of-type(2),
+.competences-section-immobilier > div:nth-of-type(2) {
+  @apply !pl-4 !pr-4;
 }
 
 .competences-section-famille div:nth-of-type(3) > div,
@@ -483,6 +489,9 @@ aside {
   h3 {
     @apply text-blue-sky text-center;
   }
+}
+.wpcf7-list-item-label {
+  @apply underline;
 }
 
 input[type="checkbox"] {

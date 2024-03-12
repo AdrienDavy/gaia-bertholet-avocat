@@ -75,6 +75,7 @@ const competencesPage = `${Astro.url.origin}/competences/`;
       case "core/image":
         return (
           <Image
+            id={postId}
             src={block.attributes?.url}
             height={block.attributes?.height}
             width={block.attributes?.width}
