@@ -4,9 +4,9 @@ import { joinClasses } from "../utils/joinClasses";
 type Props = {
   url: string;
   classes: string;
-  styles: string;
+  styles?: string;
 };
-const { url, classes, styles } = Astro.props;
+const { url, classes } = Astro.props;
 const embedUrl = transformYouTubeUrl(url);
 const allClasses = joinClasses(
   classes,
