@@ -10,6 +10,7 @@ const {
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://gaia-bertholet-avocat.vercel.app/",
   devToolbar: {
     enabled: false
   },
@@ -19,6 +20,6 @@ export default defineConfig({
   integrations: [tailwind({
     applyBaseStyles: false // Disable base styles for custom-built components (defaults to true)
   }), react()],
-  output: "server",
+  output: "hybrid",
   adapter: vercel()
 });
