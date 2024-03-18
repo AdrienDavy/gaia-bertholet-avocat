@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import { loadEnv } from 'vite';
 import react from "@astrojs/react";
