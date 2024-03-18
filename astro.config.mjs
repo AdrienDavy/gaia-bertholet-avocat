@@ -15,7 +15,8 @@ export default defineConfig({
     enabled: false
   },
   image: {
-    domains: [PUBLIC_WP_URL]
+    domains: [PUBLIC_WP_URL],
+    service: passthroughImageService()
   },
   integrations: [tailwind({
     applyBaseStyles: false // Disable base styles for custom-built components (defaults to true)
