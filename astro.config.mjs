@@ -21,6 +21,6 @@ export default defineConfig({
   integrations: [tailwind({
     applyBaseStyles: false // Disable base styles for custom-built components (defaults to true)
   }), react()],
-  output:'server',
+  output:'hybrid',
   adapter: vercel()
 });
