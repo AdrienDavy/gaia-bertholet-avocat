@@ -10,7 +10,7 @@ const {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://gaia-bertholet-avocat.fr',
+  site: 'https://gaia-bertholet-avocat.vercel.app',
   devToolbar: {
     enabled: false
   },
